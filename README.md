@@ -1,3 +1,3 @@
-#Impact Model PlugIn
+#SDT Impact Model PlugIn
 
 
