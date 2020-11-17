@@ -54,6 +54,8 @@
       <FILE id="OHpPlN" name="gui.xml" compile="0" resource="1" file="Source/gui.xml"/>
       <FILE id="RUdWqA" name="ImpactModel.cpp" compile="1" resource="0" file="Source/ImpactModel.cpp"/>
       <FILE id="l784ay" name="ImpactModel.h" compile="0" resource="0" file="Source/ImpactModel.h"/>
+      <FILE id="X4qUIA" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
+      <FILE id="rj4sx5" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="cQ6VMQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="Oiy87L" name="PluginProcessor.h" compile="0" resource="0"
