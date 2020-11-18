@@ -197,9 +197,9 @@ bool ImpactModelAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* ImpactModelAudioProcessor::createEditor()
 {
-    return new ImpactModelAudioProcessorEditor(*this);
+    //return new ImpactModelAudioProcessorEditor(*this);
     //return new juce::GenericAudioProcessorEditor(this);
-    //return new foleys::MagicPluginEditor(magicState, BinaryData::gui_xml, BinaryData::gui_xmlSize);
+    return new foleys::MagicPluginEditor(magicState/*, BinaryData::gui_xml, BinaryData::gui_xmlSize*/);
 }
 
 //==============================================================================

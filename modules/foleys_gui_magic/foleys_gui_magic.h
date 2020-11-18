@@ -57,7 +57,7 @@
             Enables the GUI editor palette allowing to edit the GUI. Ideally set this to 0 in a release build.
   */
 #ifndef FOLEYS_SHOW_GUI_EDITOR_PALLETTE
-#define FOLEYS_SHOW_GUI_EDITOR_PALLETTE 0
+#define FOLEYS_SHOW_GUI_EDITOR_PALLETTE 1
 #endif
 
 /** Config: FOLEYS_ENABLE_BINARY_DATA
