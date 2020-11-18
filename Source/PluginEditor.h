@@ -40,7 +40,7 @@ private:
 
     std::unique_ptr<juce::TextButton> playButton;
 
-    juce::LookAndFeel_V4 theLFLight;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> playAttachment;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

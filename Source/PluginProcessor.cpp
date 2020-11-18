@@ -38,6 +38,7 @@ ImpactModelAudioProcessor::ImpactModelAudioProcessor()
     apvts.addParameterListener("STIFF", this);
     apvts.addParameterListener("DISS", this);
     apvts.addParameterListener("SH", this);
+    apvts.addParameterListener("BANG", this);
 
     init();
 }
@@ -162,6 +163,8 @@ void ImpactModelAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         updateModalParameters();
     if (mustUpdateImpactParameters)
         updateImpactParameters();
+    if(mustStrike)
+        strike();
 
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
@@ -252,19 +255,20 @@ void ImpactModelAudioProcessor::updateVolume()
 void ImpactModelAudioProcessor::updateInertialParameters()
 {
     mustUpdateInertialParameters = false;
-    //auto m = apvts.getRawParameterValue("MASS");
+    auto m = apvts.getRawParameterValue("MASS");
     //auto vel = apvts.getRawParameterValue("VEL");
     auto f = apvts.getRawParameterValue("FOR");
 
-    //double mass = m->load();
+    double mass = m->load();
     //double velocity = vel->load();
     double force = f->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        /*model[channel]->setInertialParameters(mass, 1.0);*/
+        model[channel]->setInertialParameters(mass, 1.0);
         model[channel]->setExtenalForce(-1*force);
         /*model[channel]->setStrike(0.0, -1 * velocity);*/
     }
+    //strike();
 }
 
 void ImpactModelAudioProcessor::updateModalParameters()
@@ -310,16 +314,14 @@ void ImpactModelAudioProcessor::updateImpactParameters()
 //===============================================================================
 void ImpactModelAudioProcessor::strike()
 {
+    mustStrike = false;
     auto vel = apvts.getRawParameterValue("VEL");
-    auto m = apvts.getRawParameterValue("MASS");
-
     double velocity = vel->load();
-    double mass = m->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setInertialParameters(mass, 1.0);
         model[channel]->setStrike(0.0, -9.741634);
     }
+
 }
 
 //===============================================================================
@@ -365,10 +367,8 @@ void ImpactModelAudioProcessor::addInertialParameters(juce::AudioProcessorValueT
     auto force = std::make_unique<juce::AudioParameterFloat>("FOR", "Force", juce::NormalisableRange<float>(0.0, 10.0), 0.0,
         "N", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
-    /*auto bang = std::make_unique<juce::AudioParameterBool>("BANG", "bang", false, "", nullptr, nullptr);*/
-
     auto group = std::make_unique<juce::AudioProcessorParameterGroup>("sdt.inertial", "HAMMER CONTROLS", "|",
-        std::move(velocity), std::move(mass), std::move(force)/*, std::move(bang)*/);
+        std::move(velocity), std::move(mass), std::move(force));
 
     layout.add(std::move(group));
 }
@@ -417,12 +417,14 @@ void ImpactModelAudioProcessor::addGainParameters(juce::AudioProcessorValueTreeS
     std::function<juce::String(float, int)> valueToTextFunction = [](float x, int l) {return juce::String(x, 4);  };
     std::function<float(const juce::String&)> textToValueFunction = [](const juce::String& str) {return str.getFloatValue(); };
 
+    auto bang = std::make_unique<juce::AudioParameterBool>("BANG", "bang", false);
+
     auto volume = std::make_unique<juce::AudioParameterFloat>("VOL", "Volume", juce::NormalisableRange< float >(-40.0f, 20.0f), 0.0f,
         "dB", juce::AudioProcessorParameter::genericParameter, valueToTextFunction,
         textToValueFunction);
 
     auto group = std::make_unique<juce::AudioProcessorParameterGroup>("sdt.gain", "VOLUME CONTROLS", "|",
-        std::move(volume));
+        std::move(volume), std::move(bang));
 
     layout.add(std::move(group));
 
@@ -472,5 +474,8 @@ void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID
         mustUpdateImpactParameters = true;
     if (parameterID == "SH")
         mustUpdateImpactParameters = true;
+    if (parameterID == "BANG")
+        mustStrike = true;
+
 }
 

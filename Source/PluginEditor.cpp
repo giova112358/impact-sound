@@ -13,7 +13,7 @@
 ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    volumeSlider = std::make_unique<juce::Slider >(juce::Slider::SliderStyle::LinearHorizontal, juce::Slider::TextBoxRight);
+    volumeSlider = std::make_unique<juce::Slider >(juce::Slider::SliderStyle::LinearBar, juce::Slider::TextBoxRight);
     addAndMakeVisible(volumeSlider.get());
     volAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "VOL", *volumeSlider);
     volumeLabel = std::make_unique<juce::Label>("", "Volume");
@@ -45,9 +45,9 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     dissipationLabel->attachToComponent(dissipationSlider.get(), false);
     dissipationLabel->setJustificationType(juce::Justification::centredBottom);
 
-    /*velocitySlider = std::make_unique<juce::Slider>(juce::Slider::SliderStyle::LinearVertical, juce::Slider::TextBoxBelow);
+    velocitySlider = std::make_unique<juce::Slider>(juce::Slider::SliderStyle::LinearVertical, juce::Slider::TextBoxBelow);
     addAndMakeVisible(velocitySlider.get());
-    velAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "VEL", *velocityLabel);
+    velAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "VEL", *velocitySlider);
     velocityLabel = std::make_unique<juce::Label>("", "Velocity");
     addAndMakeVisible(velocityLabel.get());
     velocityLabel->attachToComponent(velocitySlider.get(), false);
@@ -81,7 +81,7 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     addAndMakeVisible(freq1Slider.get());
     freq1Attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "FREQ1", *freq1Slider);
     freq1Label = std::make_unique<juce::Label>("", "Frequency 1");
-    addAndMakeVisible(forceLabel.get());
+    addAndMakeVisible(freq1Label.get());
     freq1Label->attachToComponent(freq1Slider.get(), false);
     freq1Label->setJustificationType(juce::Justification::centredBottom);
 
@@ -89,7 +89,7 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     addAndMakeVisible(freq2Slider.get());
     freq2Attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "FREQ2", *freq2Slider);
     freq2Label = std::make_unique<juce::Label>("", "Frequency 2");
-    addAndMakeVisible(forceLabel.get());
+    addAndMakeVisible(freq2Label.get());
     freq2Label->attachToComponent(freq2Slider.get(), false);
     freq2Label->setJustificationType(juce::Justification::centredBottom);
 
@@ -135,20 +135,19 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
 
     gain12Slider = std::make_unique<juce::Slider>(juce::Slider::SliderStyle::LinearVertical, juce::Slider::TextBoxBelow);
     addAndMakeVisible(gain12Slider.get());
-    gain11Attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GAINPICK12", *gain12Slider);
-    gain11Label = std::make_unique<juce::Label>("", "Gain Pickup1 Mode2");
+    gain12Attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GAINPICK12", *gain12Slider);
+    gain12Label = std::make_unique<juce::Label>("", "Gain Pickup1 Mode2");
     addAndMakeVisible(gain12Label.get());
     gain12Label->attachToComponent(gain12Slider.get(), false);
-    gain12Label->setJustificationType(juce::Justification::centredBottom);*/
+    gain12Label->setJustificationType(juce::Justification::centredBottom);
 
     playButton = std::make_unique<juce::TextButton>("Play");
-    playButton.get()->onClick = [this]() { audioProcessor.strike(); };
+    playButton->setClickingTogglesState(true);
+    playButton.get()->onClick = [this]() {  };
     addAndMakeVisible(playButton.get());
+    playAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "BANG", *playButton);
 
-    theLFLight.setColourScheme(juce::LookAndFeel_V4::getLightColourScheme());
-    juce::LookAndFeel::setDefaultLookAndFeel(&theLFLight);
-
-    setSize(4000, 300);
+    setSize(1000, 600);
 }
 
 ImpactModelAudioProcessorEditor::~ImpactModelAudioProcessorEditor()
@@ -164,24 +163,24 @@ void ImpactModelAudioProcessorEditor::paint (juce::Graphics& g)
 
 void ImpactModelAudioProcessorEditor::resized()
 {
-    auto bounds = getLocalBounds().reduced(10, 10);
+    auto bounds = getLocalBounds().reduced(10, 40);
     juce::Grid grid;
     using Track = juce::Grid::TrackInfo;
     using Fr = juce::Grid::Fr;
 
+    grid.items.add((juce::GridItem(massSlider.get())));
     grid.items.add((juce::GridItem(playButton.get())).withSize(60, 60));
-    //grid.items.add((juce::GridItem(massSlider.get())));
-    //grid.items.add((juce::GridItem(velocitySlider.get())));
-    //grid.items.add((juce::GridItem(forceSlider.get())));
-    //grid.items.add((juce::GridItem(freq0Slider.get())));
-    //grid.items.add((juce::GridItem(freq1Slider.get())));
-    //grid.items.add((juce::GridItem(freq2Slider.get())));
-    //grid.items.add((juce::GridItem(decay0Slider.get())));
-    //grid.items.add((juce::GridItem(decay1Slider.get())));
-    //grid.items.add((juce::GridItem(decay2Slider.get())));
-    //grid.items.add((juce::GridItem(gain10Slider.get())));
-    //grid.items.add((juce::GridItem(gain11Slider.get())));
-    //grid.items.add((juce::GridItem(gain12Slider.get())));
+    grid.items.add((juce::GridItem(velocitySlider.get())));
+    grid.items.add((juce::GridItem(forceSlider.get())));
+    grid.items.add((juce::GridItem(freq0Slider.get())));
+    grid.items.add((juce::GridItem(freq1Slider.get())));
+    grid.items.add((juce::GridItem(freq2Slider.get())));
+    grid.items.add((juce::GridItem(decay0Slider.get())));
+    grid.items.add((juce::GridItem(decay1Slider.get())));
+    grid.items.add((juce::GridItem(decay2Slider.get())));
+    grid.items.add((juce::GridItem(gain10Slider.get())));
+    grid.items.add((juce::GridItem(gain11Slider.get())));
+    grid.items.add((juce::GridItem(gain12Slider.get())));
     grid.items.add((juce::GridItem(stiffnessSlider.get())));
     grid.items.add((juce::GridItem(shapeSlider.get())));
     grid.items.add((juce::GridItem(dissipationSlider.get())));
@@ -189,9 +188,8 @@ void ImpactModelAudioProcessorEditor::resized()
     
 
     grid.templateColumns = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1))
-    ,Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) 
-    , Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
-    grid.templateRows = { Track(Fr(1)) };
+    ,Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
+    grid.templateRows = { Track(Fr(1)), Track(Fr(1))};
     grid.columnGap = juce::Grid::Px(10);
     grid.rowGap = juce::Grid::Px(50);
 

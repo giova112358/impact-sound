@@ -92,6 +92,7 @@ private:
     bool mustUpdateInertialParameters{ false };
     bool mustUpdateModalParameters{ false };
     bool mustUpdateImpactParameters{ false };
+    bool mustStrike{ false };
 
     void parameterChanged(const juce::String& parameterID, float newValue) override;
 
