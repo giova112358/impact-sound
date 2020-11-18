@@ -7,6 +7,7 @@
 */
 
 #include "PluginProcessor.h"
+#include "PluginEditor.h"
 
 //==============================================================================
 ImpactModelAudioProcessor::ImpactModelAudioProcessor()
@@ -193,8 +194,8 @@ bool ImpactModelAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* ImpactModelAudioProcessor::createEditor()
 {
-
-    return new juce::GenericAudioProcessorEditor(this);
+    return new ImpactModelAudioProcessorEditor(*this);
+    //return new juce::GenericAudioProcessorEditor(this);
     //return new foleys::MagicPluginEditor(magicState, BinaryData::gui_xml, BinaryData::gui_xmlSize);
 }
 
@@ -251,18 +252,18 @@ void ImpactModelAudioProcessor::updateVolume()
 void ImpactModelAudioProcessor::updateInertialParameters()
 {
     mustUpdateInertialParameters = false;
-    auto m = apvts.getRawParameterValue("MASS");
-    auto vel = apvts.getRawParameterValue("VEL");
+    //auto m = apvts.getRawParameterValue("MASS");
+    //auto vel = apvts.getRawParameterValue("VEL");
     auto f = apvts.getRawParameterValue("FOR");
 
-    double mass = m->load();
-    double velocity = vel->load();
+    //double mass = m->load();
+    //double velocity = vel->load();
     double force = f->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setInertialParameters(mass, 1.0);
+        /*model[channel]->setInertialParameters(mass, 1.0);*/
         model[channel]->setExtenalForce(-1*force);
-        model[channel]->setStrike(0.0, -1 * velocity);
+        /*model[channel]->setStrike(0.0, -1 * velocity);*/
     }
 }
 
@@ -398,7 +399,7 @@ void ImpactModelAudioProcessor::addModalParameters(juce::AudioProcessorValueTree
     auto gain10 = std::make_unique<juce::AudioParameterFloat>("GAINPICK10", "Gain Pickup1 Mode0", juce::NormalisableRange<float>(10, 100), 60,
         "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
-    auto gain11 = std::make_unique<juce::AudioParameterFloat>("GAINPICK11", "Gain Pickup0 Mode1", juce::NormalisableRange<float>(10, 100), 40,
+    auto gain11 = std::make_unique<juce::AudioParameterFloat>("GAINPICK11", "Gain Pickup1 Mode1", juce::NormalisableRange<float>(10, 100), 40,
         "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
     auto gain12 = std::make_unique<juce::AudioParameterFloat>("GAINPICK12", "Gain Pickup1 Mode2", juce::NormalisableRange<float>(10, 100), 30,

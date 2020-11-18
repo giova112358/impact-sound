@@ -25,10 +25,18 @@ public:
     void resized() override;
 
 private:
-    std::unique_ptr<juce::Slider> volumeSlider, stiffnessSlider, shapeSlider, dissipationSlider;
-    std::unique_ptr<juce::Label> volumeLabel, stiffnessLabel, shapeLabel, dissipationLabel;
+    std::unique_ptr<juce::Slider> volumeSlider, stiffnessSlider, shapeSlider, dissipationSlider, 
+        velocitySlider, massSlider, forceSlider, freq0Slider, freq1Slider, freq2Slider, decay0Slider,
+        decay1Slider, decay2Slider, gain10Slider, gain11Slider, gain12Slider;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volAttachment, stiffAttachment, shapeAttachment, dissAttachment;
+    std::unique_ptr<juce::Label> volumeLabel, stiffnessLabel, shapeLabel, dissipationLabel, velocityLabel,
+        massLabel, forceLabel, freq0Label, freq1Label, freq2Label, decay0Label, decay1Label, decay2Label,
+        gain10Label, gain11Label, gain12Label;
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volAttachment, stiffAttachment, 
+        shapeAttachment, dissAttachment, velAttachment, massAttachment, forceAttachment, freq0Attachment, 
+        freq1Attachment, freq2Attachment, decay0Attachment, decay1Attachment, decay2Attachment, gain10Attachment,
+        gain11Attachment, gain12Attachment;
 
     std::unique_ptr<juce::TextButton> playButton;
 
