@@ -4,9 +4,9 @@ A VST3 implementation of sdt.impact Max/Msp patch
 
 ## TO DO 
 
-- correct the glitches of the sliders:
-  -try to insert a button that will be a play button, and not set the strike every change of the sliders. DONE
-  -correct the external force parameter something strange happends.
+- correct the processing part something strange happens(the sound is clipped).
+  
+- correct the external force parameter something strange happends.
   
 - create the exact same presets of std.impact patch  
 
