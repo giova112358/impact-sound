@@ -194,8 +194,8 @@ bool ImpactModelAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* ImpactModelAudioProcessor::createEditor()
 {
 
-    //return new juce::GenericAudioProcessorEditor(this);
-    return new foleys::MagicPluginEditor(magicState, BinaryData::gui_xml, BinaryData::gui_xmlSize);
+    return new juce::GenericAudioProcessorEditor(this);
+    //return new foleys::MagicPluginEditor(magicState, BinaryData::gui_xml, BinaryData::gui_xmlSize);
 }
 
 //==============================================================================
@@ -247,6 +247,7 @@ void ImpactModelAudioProcessor::updateVolume()
         mVolume[channel].setTargetValue(juce::Decibels::decibelsToGain(volume->load()));
     }
 }
+
 void ImpactModelAudioProcessor::updateInertialParameters()
 {
     mustUpdateInertialParameters = false;
@@ -309,9 +310,13 @@ void ImpactModelAudioProcessor::updateImpactParameters()
 void ImpactModelAudioProcessor::strike()
 {
     auto vel = apvts.getRawParameterValue("VEL");
+    auto m = apvts.getRawParameterValue("MASS");
+
     double velocity = vel->load();
+    double mass = m->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
+        model[channel]->setInertialParameters(mass, 1.0);
         model[channel]->setStrike(0.0, -9.741634);
     }
 }
@@ -359,8 +364,10 @@ void ImpactModelAudioProcessor::addInertialParameters(juce::AudioProcessorValueT
     auto force = std::make_unique<juce::AudioParameterFloat>("FOR", "Force", juce::NormalisableRange<float>(0.0, 10.0), 0.0,
         "N", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
+    /*auto bang = std::make_unique<juce::AudioParameterBool>("BANG", "bang", false, "", nullptr, nullptr);*/
+
     auto group = std::make_unique<juce::AudioProcessorParameterGroup>("sdt.inertial", "HAMMER CONTROLS", "|",
-        std::move(velocity), std::move(mass), std::move(force));
+        std::move(velocity), std::move(mass), std::move(force)/*, std::move(bang)*/);
 
     layout.add(std::move(group));
 }
