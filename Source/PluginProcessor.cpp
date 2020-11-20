@@ -171,7 +171,7 @@ void ImpactModelAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     auto numSamples = buffer.getNumSamples();
 
-    magicState.processMidiBuffer(midiMessages, numSamples);
+    /*magicState.processMidiBuffer(midiMessages, numSamples);*/
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
@@ -197,20 +197,53 @@ bool ImpactModelAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* ImpactModelAudioProcessor::createEditor()
 {
-    //return new ImpactModelAudioProcessorEditor(*this);
+    return new ImpactModelAudioProcessorEditor(*this);
     //return new juce::GenericAudioProcessorEditor(this);
-    return new foleys::MagicPluginEditor(magicState/*, BinaryData::gui_xml, BinaryData::gui_xmlSize*/);
+    //return new foleys::MagicPluginEditor(magicState/*, BinaryData::gui_xml, BinaryData::gui_xmlSize*/);
 }
+//==============================================================================
+//void ImpactModelAudioProcessor::savePresetInternal()
+//{
+//    juce::ValueTree preset{ "Preset" };
+//    preset.setProperty("name", "Preset " + juce::String(presetNode.getNumChildren() + 1), nullptr);
+//    for (const auto& p : magicState.getValueTreeState().state)
+//        if (p.getType().toString() == "PARAM")
+//            preset.appendChild(p.createCopy(), nullptr);
+//
+//    presetNode.appendChild(preset, nullptr);
+//
+//    presetList->sendChangeMessage();
+//}
+//
+//void ImpactModelAudioProcessor::loadPresetInternal(int index)
+//{
+//    auto preset = presetNode.getChild(index);
+//    for (const auto& p : preset)
+//    {
+//        if (p.hasType("PARAM"))
+//        {
+//            auto id = p.getProperty("id", "unknownID").toString();
+//            if (auto* parameter = dynamic_cast<juce::RangedAudioParameter*>(magicState.getValueTreeState().getParameter(id)))
+//                parameter->setValueNotifyingHost(parameter->convertTo0to1(p.getProperty("value")));
+//        }
+//    }
+//}
 
 //==============================================================================
 void ImpactModelAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    magicState.getStateInformation(destData);
+   /* magicState.getStateInformation(destData);*/
+    juce::ValueTree copyState = apvts.copyState();
+    std::unique_ptr<juce::XmlElement> xml = copyState.createXml();
+    copyXmlToBinary(*xml.get(), destData);
 }
 
 void ImpactModelAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    magicState.setStateInformation(data, sizeInBytes, getActiveEditor());
+    /*magicState.setStateInformation(data, sizeInBytes, getActiveEditor());*/
+    std::unique_ptr<juce::XmlElement> xml = getXmlFromBinary(data, sizeInBytes);
+    juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
+    apvts.replaceState(copyState);
 }
 
 //==============================================================================

@@ -58,6 +58,7 @@
       <FILE id="BaVuew" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="Xj6TAf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="ZPD8WS" name="PresetListBox.h" compile="0" resource="0" file="Source/PresetListBox.h"/>
       <FILE id="rj4sx5" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="cQ6VMQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

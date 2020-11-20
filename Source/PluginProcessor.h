@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "ImpactModel.h"
+#include "PresetListBox.h"
 
 //==============================================================================
 /**
@@ -50,6 +51,10 @@ public:
     void setCurrentProgram (int index) override;
     const juce::String getProgramName (int index) override;
     void changeProgramName (int index, const juce::String& newName) override;
+
+    //==============================================================================
+    //void savePresetInternal();
+    //void loadPresetInternal(int index);
 
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
@@ -102,7 +107,11 @@ private:
 
     std::unique_ptr<ImpactModel> model[numChannels];
 
-    foleys::MagicProcessorState magicState{ *this, apvts };
+    //juce::ValueTree  presetNode;
+
+    /*foleys::MagicProcessorState magicState{ *this, apvts };*/
+
+    //PresetListBox* presetList = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ImpactModelAudioProcessor)
 };
