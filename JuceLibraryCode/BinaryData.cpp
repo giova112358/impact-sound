@@ -38,9 +38,17 @@ static const unsigned char temp_binary_data_0[] =
 "  <View id=\"root\" resizable=\"1\" resize-corner=\"1\" background-color=\"FF455060\">\r\n"
 "    <View caption=\"HAMMER CONTROLS\" class=\"group\" lookAndFeel=\"FoleysFinest\"\r\n"
 "          background-color=\"FF455060\">\r\n"
-"      <Slider parameter=\"FOR\" slider-type=\"linear-horizontal\" background-color=\"FF455060\"\r\n"
-"              lookAndFeel=\"LookAndFeel_V2\" caption=\"External Force\" flex-align-self=\"auto\"\r\n"
-"              max-height=\"150\"/>\r\n"
+"      <View background-color=\"FF455060\" min-height=\"0\" max-height=\"60\" flex-direction=\"row-reverse\">\r\n"
+"        <View background-color=\"FF455060\" flex-direction=\"row\"/>\r\n"
+"        <ToggleButton parameter=\"BANG\" max-width=\"50\" max-height=\"50\" toggle-text=\"play\"\r\n"
+"                      text=\"Play\" tab-caption=\"\" background-color=\"FF455060\" lookAndFeel=\"FoleysFinest\"\r\n"
+"                      image-placement=\"centred\"/>\r\n"
+"        <Label justification=\"centred-left\" editable=\"0\" background-color=\"FF455060\"\r\n"
+"               max-height=\"50\" text=\"\" font-size=\"14\"/>\r\n"
+"      </View>\r\n"
+"      <Slider parameter=\"FOR\" slider-type=\"linear-vertical\" background-color=\"FF455060\"\r\n"
+"              lookAndFeel=\"LookAndFeel_V1\" caption=\"External Force\" flex-align-self=\"auto\"\r\n"
+"              slider-textbox=\"textbox-below\"/>\r\n"
 "      <Slider caption=\"Velocity\" parameter=\"VEL\" lookAndFeel=\"LookAndFeel_V1\"\r\n"
 "              image-placement=\"stretch\" background-color=\"FF455060\" slider-type=\"linear-vertical\"/>\r\n"
 "      <Slider caption=\"Mass\" parameter=\"MASS\" background-color=\"FF455060\" slider-type=\"linear-vertical\"\r\n"
@@ -97,7 +105,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 
     switch (hash)
     {
-        case 0x163d7b13:  numBytes = 3897; return gui_xml;
+        case 0x163d7b13:  numBytes = 4481; return gui_xml;
         default: break;
     }
 

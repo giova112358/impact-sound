@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   gui_xml;
-    const int            gui_xmlSize = 3897;
+    const int            gui_xmlSize = 4481;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 1;
