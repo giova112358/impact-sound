@@ -10,7 +10,6 @@
 
 #include <JuceHeader.h>
 #include "ImpactModel.h"
-#include "PresetListBox.h"
 
 //==============================================================================
 /**

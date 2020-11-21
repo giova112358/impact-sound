@@ -180,7 +180,7 @@ void ImpactModelAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
         for (int sample = 0; sample < numSamples; ++sample) {
             channelData[sample] = 1000 * model[channel]->process();
-            channelData[sample] = juce::jlimit(-1.0f, 1.0f, channelData[sample]);
+            //channelData[sample] = juce::jlimit(-1.0f, 1.0f, channelData[sample]);
         }
 
         mVolume[channel].applyGain(channelData, numSamples);
@@ -365,7 +365,7 @@ void ImpactModelAudioProcessor::addInertialParameters(juce::AudioProcessorValueT
     auto mass = std::make_unique<juce::AudioParameterFloat>("MASS", "Mass", juce::NormalisableRange<float>(0.001, 0.26), 0.001047,
         "Kg", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
-    auto force = std::make_unique<juce::AudioParameterFloat>("FOR", "Force", juce::NormalisableRange<float>(0.0, 10.0), 0.0,
+    auto force = std::make_unique<juce::AudioParameterFloat>("FOR", "Force", juce::NormalisableRange<float>(0.0, 0.2), 0.0,
         "N", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction);
 
     auto group = std::make_unique<juce::AudioProcessorParameterGroup>("sdt.inertial", "HAMMER CONTROLS", "|",
@@ -420,7 +420,7 @@ void ImpactModelAudioProcessor::addGainParameters(juce::AudioProcessorValueTreeS
 
     auto bang = std::make_unique<juce::AudioParameterBool>("BANG", "bang", false);
 
-    auto volume = std::make_unique<juce::AudioParameterFloat>("VOL", "Volume", juce::NormalisableRange< float >(-40.0f, 20.0f), 0.0f,
+    auto volume = std::make_unique<juce::AudioParameterFloat>("VOL", "Volume", juce::NormalisableRange< float >(-40.0f, 10.0f), 0.0f,
         "dB", juce::AudioProcessorParameter::genericParameter, valueToTextFunction,
         textToValueFunction);
 
