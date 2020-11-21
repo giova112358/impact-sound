@@ -51,15 +51,11 @@
         <FILE id="yepSfX" name="SDTStructs.c" compile="1" resource="0" file="Source/SDT/SDTStructs.c"/>
         <FILE id="wbdMuR" name="SDTStructs.h" compile="0" resource="0" file="Source/SDT/SDTStructs.h"/>
       </GROUP>
-      <FILE id="OHpPlN" name="gui.xml" compile="0" resource="1" file="Source/gui.xml"/>
       <FILE id="RUdWqA" name="ImpactModel.cpp" compile="1" resource="0" file="Source/ImpactModel.cpp"/>
       <FILE id="l784ay" name="ImpactModel.h" compile="0" resource="0" file="Source/ImpactModel.h"/>
-      <FILE id="X4qUIA" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
       <FILE id="BaVuew" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="Xj6TAf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="ZPD8WS" name="PresetListBox.h" compile="0" resource="0" file="Source/PresetListBox.h"/>
-      <FILE id="rj4sx5" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="cQ6VMQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="Oiy87L" name="PluginProcessor.h" compile="0" resource="0"
@@ -86,13 +82,11 @@
         <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="foleys_gui_magic" path="modules"/>
         <MODULEPATH id="juce_dsp" path="../../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="foleys_gui_magic" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

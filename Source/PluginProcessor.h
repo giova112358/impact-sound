@@ -53,10 +53,6 @@ public:
     void changeProgramName (int index, const juce::String& newName) override;
 
     //==============================================================================
-    //void savePresetInternal();
-    //void loadPresetInternal(int index);
-
-    //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
@@ -69,7 +65,7 @@ public:
                                      impact models*/
 
     //==============================================================================
-    /*update methods called when a parameter i changed in the GUI*/
+    /*update methods called when a parameter is changed in the GUI*/
     //==============================================================================
     void updateVolume();
     void updateInertialParameters();
@@ -106,14 +102,6 @@ private:
     juce::LinearSmoothedValue<float> mVolume[2]{ 0.0 };
 
     std::unique_ptr<ImpactModel> model[numChannels];
-
-    //juce::ValueTree  presetNode;
-
-    /*foleys::MagicProcessorState magicState{ *this, apvts };*/
-
-    //PresetListBox* presetList = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ImpactModelAudioProcessor)
 };
-
-//modifies pluginprocessor.h
