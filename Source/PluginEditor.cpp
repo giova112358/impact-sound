@@ -147,6 +147,10 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     addAndMakeVisible(playButton.get());
     playAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "BANG", *playButton);
 
+    presButton = std::make_unique<juce::TextButton>("Presets");
+    addAndMakeVisible(presButton.get());
+    presButton->addListener(this);
+
     setSize(1000, 600);
 }
 
@@ -157,19 +161,36 @@ ImpactModelAudioProcessorEditor::~ImpactModelAudioProcessorEditor()
 //==============================================================================
 void ImpactModelAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    auto bounds = getLocalBounds();
+    auto textBounds = bounds.removeFromTop(40);
+
+
+    g.setColour(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
+    g.fillRect(bounds);
+
+    g.setColour(juce::Colours::black);
+    g.fillRect(textBounds);
+
+    g.setColour(juce::Colours::white);
+    g.setFont(juce::Font(20.0f).italicised().withExtraKerningFactor(0.1f));
+    g.drawFittedText("SDT Impact", textBounds, juce::Justification::centredLeft, 1);
 }
 
 void ImpactModelAudioProcessorEditor::resized()
 {
-    auto bounds = getLocalBounds().reduced(10, 40);
+    auto bounds = getLocalBounds();
+    auto rectTop = bounds.removeFromTop(40);
+    bounds.reduce(40, 40);
+
+    rectTop.reduce(10, 0);
+    presButton->setBounds(rectTop.removeFromRight(120).withSizeKeepingCentre(120, 24));
+
     juce::Grid grid;
     using Track = juce::Grid::TrackInfo;
     using Fr = juce::Grid::Fr;
 
-    grid.items.add((juce::GridItem(massSlider.get())));
     grid.items.add((juce::GridItem(playButton.get())).withSize(60, 60));
+    grid.items.add((juce::GridItem(massSlider.get())));
     grid.items.add((juce::GridItem(velocitySlider.get())));
     grid.items.add((juce::GridItem(forceSlider.get())));
     grid.items.add((juce::GridItem(freq0Slider.get())));
@@ -187,11 +208,30 @@ void ImpactModelAudioProcessorEditor::resized()
     grid.items.add(juce::GridItem(volumeSlider.get()).withSize(300, 20));
     
 
-    grid.templateColumns = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1))
-    ,Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
+    grid.templateColumns = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), 
+        Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
     grid.templateRows = { Track(Fr(1)), Track(Fr(1))};
     grid.columnGap = juce::Grid::Px(10);
     grid.rowGap = juce::Grid::Px(50);
 
     grid.performLayout(bounds);
+}
+
+//================================================================================
+void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
+{
+    if (button == presButton.get()) {
+        juce::PopupMenu m;
+
+        m.addItem(1, "Pres 1", true, currentPres == 1);
+        m.addItem(2, "Pres 2", true, currentPres == 2);
+        m.addItem(3, "Pres 3", true, currentPres == 3);
+        m.addItem(4, "Pres 4", true, currentPres == 4);
+
+        m.addSeparator();
+        m.addItem(5, "Pres 5", true, currentPres == 5);
+        m.addItem(6, "Pres 6", true, currentPres == 6);
+
+        auto result = m.showAt(presButton.get());
+    }
 }
