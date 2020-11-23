@@ -11,8 +11,10 @@
 
 //==============================================================================
 ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), stateComponent{ /*p.stateAB,*/ p.statePresets }
 {
+    addAndMakeVisible(&stateComponent);
+
     volumeSlider = std::make_unique<juce::Slider >(juce::Slider::SliderStyle::LinearBar, juce::Slider::TextBoxRight);
     addAndMakeVisible(volumeSlider.get());
     volAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "VOL", *volumeSlider);
@@ -147,9 +149,9 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     addAndMakeVisible(playButton.get());
     playAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "BANG", *playButton);
 
-    presButton = std::make_unique<juce::TextButton>("Presets");
+    /*presButton = std::make_unique<juce::TextButton>("Presets");
     addAndMakeVisible(presButton.get());
-    presButton->addListener(this);
+    presButton->addListener(this);*/
 
     setSize(1000, 600);
 }
@@ -182,8 +184,10 @@ void ImpactModelAudioProcessorEditor::resized()
     auto rectTop = bounds.removeFromTop(40);
     bounds.reduce(40, 40);
 
-    rectTop.reduce(10, 0);
-    presButton->setBounds(rectTop.removeFromRight(120).withSizeKeepingCentre(120, 24));
+    stateComponent.setBounds(0, 0, getWidth(), getHeight());
+
+    /*rectTop.reduce(10, 0);
+    presButton->setBounds(rectTop.removeFromRight(120).withSizeKeepingCentre(120, 24));*/
 
     juce::Grid grid;
     using Track = juce::Grid::TrackInfo;
@@ -218,20 +222,20 @@ void ImpactModelAudioProcessorEditor::resized()
 }
 
 //================================================================================
-void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
-{
-    if (button == presButton.get()) {
-        juce::PopupMenu m;
-
-        m.addItem(1, "Pres 1", true, currentPres == 1);
-        m.addItem(2, "Pres 2", true, currentPres == 2);
-        m.addItem(3, "Pres 3", true, currentPres == 3);
-        m.addItem(4, "Pres 4", true, currentPres == 4);
-
-        m.addSeparator();
-        m.addItem(5, "Pres 5", true, currentPres == 5);
-        m.addItem(6, "Pres 6", true, currentPres == 6);
-
-        auto result = m.showAt(presButton.get());
-    }
-}
+//void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
+//{
+//    if (button == presButton.get()) {
+//        juce::PopupMenu m;
+//
+//        m.addItem(1, "Pres 1", true, currentPres == 1);
+//        m.addItem(2, "Pres 2", true, currentPres == 2);
+//        m.addItem(3, "Pres 3", true, currentPres == 3);
+//        m.addItem(4, "Pres 4", true, currentPres == 4);
+//
+//        m.addSeparator();
+//        m.addItem(5, "Pres 5", true, currentPres == 5);
+//        m.addItem(6, "Pres 6", true, currentPres == 6);
+//
+//        auto result = m.showAt(presButton.get());
+//    }
+//}

@@ -19,7 +19,9 @@ ImpactModelAudioProcessor::ImpactModelAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts(*this, nullptr, "Parameters", createParameterLayout())
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout() /*createParameters()*/),
+                          /*stateAB{ getParametersForWriting() },*/
+                          statePresets{ getParametersForWriting(), "D:/Sound and Audio Engineering/TESI/repo/Source/presets.xml" }
 #endif
 {
     apvts.addParameterListener("VOL", this);
@@ -441,6 +443,62 @@ juce::AudioProcessorValueTreeState::ParameterLayout ImpactModelAudioProcessor::c
     return layout;
 }
 
+//juce::AudioProcessorValueTreeState::ParameterLayout ImpactModelAudioProcessor::createParameters() 
+//{
+//    std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
+//
+//    std::function<juce::String(float, int)> valueToTextFunction = [](float x, int l) {return juce::String(x, 4);  };
+//    std::function<float(const juce::String&)> textToValueFunction = [](const juce::String& str) {return str.getFloatValue(); };
+//
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("STIFF", "Stiffness", juce::NormalisableRange<float>(1000.0, 20000000000.0), 37396,
+//        "k", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("SH", "Shape", juce::NormalisableRange<float>(1.0, 4.0), 1.8055,
+//        "alpha", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("DISS", "Dissipation", juce::NormalisableRange<float>(0.00001, 1.0), 0.5092,
+//        "mu", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("VEL", "Velocity", juce::NormalisableRange<float>(0.001, 40.0), 3.741,
+//        "m/s", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("MASS", "Mass", juce::NormalisableRange<float>(0.001, 0.26), 0.001047,
+//        "Kg", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FOR", "Force", juce::NormalisableRange<float>(0.0, 0.2), 0.0,
+//        "N", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FREQ0", "Frequency0", juce::NormalisableRange<float>(20.0, 5000), 500,
+//        "Hz", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FREQ1", "Frequency1", juce::NormalisableRange<float>(20.0, 5000), 509,
+//        "Hz", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FREQ2", "Frequency2", juce::NormalisableRange<float>(20.0, 5000), 795,
+//        "Hz", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("DEC0", "Decay0", juce::NormalisableRange<float>(0.0, 1.0), 0.8,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("DEC1", "Decay1", juce::NormalisableRange<float>(0.0, 1.0), 0.6,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("DEC2", "Decay2", juce::NormalisableRange<float>(0.0, 1.0), 1.0,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAINPICK10", "Gain Pickup1 Mode0", juce::NormalisableRange<float>(10, 100), 60,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAINPICK11", "Gain Pickup1 Mode1", juce::NormalisableRange<float>(10, 100), 40,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAINPICK12", "Gain Pickup1 Mode2", juce::NormalisableRange<float>(10, 100), 30,
+//        "", juce::AudioProcessorParameter::genericParameter, valueToTextFunction, textToValueFunction));
+//    parameters.push_back(std::make_unique<juce::AudioParameterBool>("BANG", "bang", false));
+//    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("VOL", "Volume", juce::NormalisableRange< float >(-40.0f, 10.0f), 0.0f,
+//        "dB", juce::AudioProcessorParameter::genericParameter, valueToTextFunction,
+//        textToValueFunction));
+//
+//    return { parameters.begin(), parameters.end() };
+//}
+
+juce::OwnedArray<juce::AudioProcessorParameter>& ImpactModelAudioProcessor::getCurrentParameters()
+{
+    juce::OwnedArray<juce::AudioProcessorParameter> currentParameter{ apvts.getParameter("VOL"), apvts.getParameter("BANG"),
+    apvts.getParameter("GAINPICK12"), apvts.getParameter("GAINPICK11"), apvts.getParameter("GAINPICK10"), apvts.getParameter("DEC2"),
+    apvts.getParameter("DEC1"), apvts.getParameter("DEC0"), apvts.getParameter("FREQ2"), apvts.getParameter("FREQ1"), apvts.getParameter("FREQ0"),
+    apvts.getParameter("FOR"), apvts.getParameter("MASS"), apvts.getParameter("VEL"), apvts.getParameter("DISS"), apvts.getParameter("SH"),
+    apvts.getParameter("STIFF") };
+
+    return currentParameter;
+}
+
 void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue)
 {
     if (parameterID == "VOL") 
@@ -478,5 +536,12 @@ void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID
     if (parameterID == "BANG")
         mustStrike = true;
 
+}
+
+//==============================================================================
+juce::OwnedArray<juce::AudioProcessorParameter>& ImpactModelAudioProcessor::getParametersForWriting() noexcept
+{
+    /*return const_cast<juce::OwnedArray<juce::AudioProcessorParameter>&> (getParameters());*/
+    return ImpactModelAudioProcessor::getCurrentParameters();
 }
 

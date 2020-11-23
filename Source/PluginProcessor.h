@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "ImpactModel.h"
+#include "State.h"
 
 //==============================================================================
 /**
@@ -85,6 +86,16 @@ public:
     void addModalParameters(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     void addGainParameters(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
+    /*juce::AudioProcessorValueTreeState::ParameterLayout createParameters();*/
+    juce::OwnedArray<juce::AudioProcessorParameter>& getCurrentParameters();
+
+    //==============================================================================
+    /** Returns the current list of parameters for writing. */
+    juce::OwnedArray<juce::AudioProcessorParameter>& getParametersForWriting() noexcept;
+
+    /*jdo::StateAB stateAB;*/
+    jdo::StatePresets statePresets;
 
 private:
     bool isActive{ false };

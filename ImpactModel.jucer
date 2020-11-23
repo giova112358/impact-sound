@@ -3,7 +3,8 @@
 <JUCERPROJECT id="fzfSJs" name="ImpactModel" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               headerPath="D:\Sound and Audio Engineering\TESI\Test\ImpactModel\Source\SDT&#10;"
-              pluginVST3Category="Instrument" pluginFormats="buildStandalone,buildVST3">
+              pluginVST3Category="Instrument" pluginFormats="buildStandalone,buildVST3"
+              binaryDataNamespace="BinaryData" includeBinaryInJuceHeader="1">
   <MAINGROUP id="VwqgPg" name="ImpactModel">
     <GROUP id="{926318D8-1153-3123-F0A3-28076B606FD2}" name="Source">
       <GROUP id="{8A3E3208-6093-0577-F01E-C777634FF88E}" name="SDT">
@@ -56,6 +57,9 @@
       <FILE id="BaVuew" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="Xj6TAf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="gQMvpI" name="State.h" compile="0" resource="0" file="Source/State.h"/>
+      <FILE id="KzTUT4" name="State.cpp" compile="1" resource="0" file="Source/State.cpp"/>
+      <FILE id="lgE2Lo" name="presets.xml" compile="0" resource="1" file="Source/presets.xml"/>
       <FILE id="cQ6VMQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="Oiy87L" name="PluginProcessor.h" compile="0" resource="0"
