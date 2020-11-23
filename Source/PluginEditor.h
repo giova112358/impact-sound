@@ -15,8 +15,8 @@
 //==============================================================================
 /**
 */
-class ImpactModelAudioProcessorEditor  : public juce::AudioProcessorEditor/*, 
-    public juce::Button::Listener*/
+class ImpactModelAudioProcessorEditor  : public juce::AudioProcessorEditor, 
+    public juce::Button::Listener
 {
 public:
     ImpactModelAudioProcessorEditor (ImpactModelAudioProcessor&);
@@ -27,7 +27,7 @@ public:
     void resized() override;
 
     //==============================================================================
-    /*void buttonClicked(juce::Button* button) override;*/
+    void buttonClicked(juce::Button* button) override;
 
 private:
     std::unique_ptr<juce::Slider> volumeSlider, stiffnessSlider, shapeSlider, dissipationSlider, 
@@ -45,10 +45,10 @@ private:
     std::unique_ptr<juce::TextButton> playButton;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> playAttachment;
 
-    /*std::unique_ptr<juce::TextButton> presButton;
-    int currentPres = 1;*/
+    std::unique_ptr<juce::TextButton> presButton;
+    int currentPres = 1;
 
-    jdo::StateComponent stateComponent;
+    /*jdo::StateComponent stateComponent;*/
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

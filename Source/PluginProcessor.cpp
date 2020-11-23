@@ -19,9 +19,9 @@ ImpactModelAudioProcessor::ImpactModelAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts(*this, nullptr, "Parameters", createParameterLayout() /*createParameters()*/),
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout() /*createParameters()*/)//,
                           /*stateAB{ getParametersForWriting() },*/
-                          statePresets{ getParametersForWriting(), "D:/Sound and Audio Engineering/TESI/repo/Source/presets.xml" }
+                          /*statePresets{ getParametersForWriting(), "D:/Sound and Audio Engineering/TESI/repo/Source/presets.xml" }*/
 #endif
 {
     apvts.addParameterListener("VOL", this);
@@ -488,9 +488,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout ImpactModelAudioProcessor::c
 //    return { parameters.begin(), parameters.end() };
 //}
 
-juce::OwnedArray<juce::AudioProcessorParameter>& ImpactModelAudioProcessor::getCurrentParameters()
+juce::OwnedArray<juce::RangedAudioParameter>& ImpactModelAudioProcessor::getCurrentParameters()
 {
-    juce::OwnedArray<juce::AudioProcessorParameter> currentParameter{ apvts.getParameter("VOL"), apvts.getParameter("BANG"),
+    juce::OwnedArray<juce::RangedAudioParameter> currentParameter{ apvts.getParameter("VOL"), apvts.getParameter("BANG"),
     apvts.getParameter("GAINPICK12"), apvts.getParameter("GAINPICK11"), apvts.getParameter("GAINPICK10"), apvts.getParameter("DEC2"),
     apvts.getParameter("DEC1"), apvts.getParameter("DEC0"), apvts.getParameter("FREQ2"), apvts.getParameter("FREQ1"), apvts.getParameter("FREQ0"),
     apvts.getParameter("FOR"), apvts.getParameter("MASS"), apvts.getParameter("VEL"), apvts.getParameter("DISS"), apvts.getParameter("SH"),
@@ -538,10 +538,30 @@ void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID
 
 }
 
-//==============================================================================
-juce::OwnedArray<juce::AudioProcessorParameter>& ImpactModelAudioProcessor::getParametersForWriting() noexcept
+////==============================================================================
+//juce::OwnedArray<juce::AudioProcessorParameter>& ImpactModelAudioProcessor::getParametersForWriting() noexcept
+//{
+//    /*return const_cast<juce::OwnedArray<juce::AudioProcessorParameter>&> (getParameters());*/
+//    return ImpactModelAudioProcessor::getCurrentParameters();
+//}
+
+void ImpactModelAudioProcessor::setPresetStateValueTree()
 {
-    /*return const_cast<juce::OwnedArray<juce::AudioProcessorParameter>&> (getParameters());*/
-    return ImpactModelAudioProcessor::getCurrentParameters();
+
+}
+
+juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
+{
+    juce::XmlElement xmlState("MYPLUGINSETTINGS");
+
+    // add some attributes to it..
+    /*for (int i = 0; i < numParameters; ++i)
+        if (juce::RangedAudioParameter* p = getCurrentParameters().getUnchecked(i))
+            xmlState.setAttribute(p->paramID, p->getValue());*/
+    xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
+    xmlState.setAttribute("VEL", apvts.getRawParameterValue("VEL")->load());
+    xmlState.setAttribute("MASS", apvts.getRawParameterValue("MASS")->load());
+
+    return xmlState;
 }
 

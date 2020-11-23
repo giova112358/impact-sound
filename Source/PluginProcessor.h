@@ -88,14 +88,16 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 
     /*juce::AudioProcessorValueTreeState::ParameterLayout createParameters();*/
-    juce::OwnedArray<juce::AudioProcessorParameter>& getCurrentParameters();
+    juce::OwnedArray<juce::RangedAudioParameter>& getCurrentParameters();
 
     //==============================================================================
     /** Returns the current list of parameters for writing. */
-    juce::OwnedArray<juce::AudioProcessorParameter>& getParametersForWriting() noexcept;
+    /*juce::OwnedArray<juce::AudioProcessorParameter>& getParametersForWriting() noexcept;*/
 
     /*jdo::StateAB stateAB;*/
-    jdo::StatePresets statePresets;
+    /*jdo::StatePresets statePresets;*/
+    void setPresetStateValueTree();
+    juce::XmlElement getAndSavePresetStateValueTree();
 
 private:
     bool isActive{ false };
@@ -104,6 +106,8 @@ private:
     bool mustUpdateModalParameters{ false };
     bool mustUpdateImpactParameters{ false };
     bool mustStrike{ false };
+
+    const int numParameters{ 17 };
 
     void parameterChanged(const juce::String& parameterID, float newValue) override;
 
