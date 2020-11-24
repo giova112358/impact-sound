@@ -47,6 +47,8 @@ private:
 
     std::unique_ptr<juce::TextButton> presButton;
     int currentPres = 1;
+    int loadCurrentPres = 1;
+    juce::XmlElement xmlState{ juce::XmlElement("MYPLUGINSETTINGS") };
 
     /*jdo::StateComponent stateComponent;*/
 

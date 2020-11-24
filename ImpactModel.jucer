@@ -7,6 +7,7 @@
               binaryDataNamespace="BinaryData" includeBinaryInJuceHeader="1">
   <MAINGROUP id="VwqgPg" name="ImpactModel">
     <GROUP id="{926318D8-1153-3123-F0A3-28076B606FD2}" name="Source">
+      <GROUP id="{DAFDBFEB-2511-ECB7-01AC-D12AFB5FA276}" name="Resources"/>
       <GROUP id="{8A3E3208-6093-0577-F01E-C777634FF88E}" name="SDT">
         <FILE id="KHUhFG" name="SDTAnalysis.c" compile="1" resource="0" file="Source/SDT/SDTAnalysis.c"/>
         <FILE id="Cltwwi" name="SDTAnalysis.h" compile="0" resource="0" file="Source/SDT/SDTAnalysis.h"/>

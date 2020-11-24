@@ -564,6 +564,7 @@ void ImpactModelAudioProcessor::setPresetStateValueTree(std::unique_ptr<juce::Xm
 
 juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
 {
+    numPresets += 1;
     juce::XmlElement xmlState("MYPLUGINSETTINGS");
 
     // add some attributes to it..
@@ -586,11 +587,13 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     xmlState.setAttribute("STIFF", apvts.getRawParameterValue("STIFF")->load());
     xmlState.setAttribute("DISS", apvts.getRawParameterValue("DISS")->load());
     xmlState.setAttribute("SH", apvts.getRawParameterValue("SH")->load());*/
+
     for (auto i = 0; i < numParameters - 1; ++i) {
         juce::RangedAudioParameter* p = getListParameter()[i];
         xmlState.setAttribute(p->paramID, p->getValue());
     }
 
     return xmlState;
+
 }
 

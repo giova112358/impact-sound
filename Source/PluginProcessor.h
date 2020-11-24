@@ -109,6 +109,7 @@ private:
     bool mustStrike{ false };
 
     const int numParameters{ 17 };
+    int numPresets{ 0 };
 
     void parameterChanged(const juce::String& parameterID, float newValue) override;
 
