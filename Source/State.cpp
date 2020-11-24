@@ -147,23 +147,6 @@ namespace jdo
         return names; // hopefully moves
     }
 
-    //juce::StringArray StatePresets::getPresetNamesFromDisk()
-    //{
-    //    parseFileToXmlElement(presetFile, presetXml); // refresh from disk
-
-    //    juce::StringArray names;
-
-    //    forEachXmlChildElement(presetXml, child)                                    // should avoid macro?
-    //    {
-    //        juce::String n = child->getStringAttribute("presetName");
-    //        if (n == "")
-    //            n = "(Unnamed preset)";
-    //        names.add(n);
-    //    }
-
-    //    return names; // hopefully moves
-    //}
-
     int StatePresets::getNumPresets() const
     {
         return presetXml.getNumChildElements();

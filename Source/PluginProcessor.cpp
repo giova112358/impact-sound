@@ -560,6 +560,11 @@ void ImpactModelAudioProcessor::setPresetStateValueTree(std::unique_ptr<juce::Xm
 {
     juce::ValueTree copyState = juce::ValueTree::fromXml(*xmlState.get());
     apvts.replaceState(copyState);
+
+    mustUpdateImpactParameters = true;
+    mustUpdateInertialParameters = true;
+    mustUpdateModalParameters = true;
+    mustUpdateVolume = true;
 }
 
 juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
@@ -571,7 +576,7 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     /*for (int i = 0; i < numParameters; ++i)
         if (juce::RangedAudioParameter* p = getCurrentParameters().getUnchecked(i))
             xmlState.setAttribute(p->paramID, p->getValue());*/
-    /*xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
+    xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
     xmlState.setAttribute("VEL", apvts.getRawParameterValue("VEL")->load());
     xmlState.setAttribute("MASS", apvts.getRawParameterValue("MASS")->load());
     xmlState.setAttribute("FOR", apvts.getRawParameterValue("FOR")->load());
@@ -586,12 +591,12 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     xmlState.setAttribute("GAINPICK12", apvts.getRawParameterValue("GAINPICK12")->load());
     xmlState.setAttribute("STIFF", apvts.getRawParameterValue("STIFF")->load());
     xmlState.setAttribute("DISS", apvts.getRawParameterValue("DISS")->load());
-    xmlState.setAttribute("SH", apvts.getRawParameterValue("SH")->load());*/
+    xmlState.setAttribute("SH", apvts.getRawParameterValue("SH")->load());
 
-    for (auto i = 0; i < numParameters - 1; ++i) {
+    /*for (auto i = 0; i < numParameters; ++i) {
         juce::RangedAudioParameter* p = getListParameter()[i];
         xmlState.setAttribute(p->paramID, p->getValue());
-    }
+    }*/
 
     return xmlState;
 
