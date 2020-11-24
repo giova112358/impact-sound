@@ -499,6 +499,17 @@ juce::OwnedArray<juce::RangedAudioParameter>& ImpactModelAudioProcessor::getCurr
     return currentParameter;
 }
 
+std::vector<juce::RangedAudioParameter*> ImpactModelAudioProcessor::getListParameter()
+{
+    std::vector<juce::RangedAudioParameter*> listParameters{ apvts.getParameter("VOL"), apvts.getParameter("BANG"),
+    apvts.getParameter("GAINPICK12"), apvts.getParameter("GAINPICK11"), apvts.getParameter("GAINPICK10"), apvts.getParameter("DEC2"),
+    apvts.getParameter("DEC1"), apvts.getParameter("DEC0"), apvts.getParameter("FREQ2"), apvts.getParameter("FREQ1"), apvts.getParameter("FREQ0"),
+    apvts.getParameter("FOR"), apvts.getParameter("MASS"), apvts.getParameter("VEL"), apvts.getParameter("DISS"), apvts.getParameter("SH"),
+    apvts.getParameter("STIFF") };
+
+    return listParameters;
+}
+
 void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue)
 {
     if (parameterID == "VOL") 
@@ -545,9 +556,10 @@ void ImpactModelAudioProcessor::parameterChanged(const juce::String& parameterID
 //    return ImpactModelAudioProcessor::getCurrentParameters();
 //}
 
-void ImpactModelAudioProcessor::setPresetStateValueTree()
+void ImpactModelAudioProcessor::setPresetStateValueTree(std::unique_ptr<juce::XmlElement> xmlState)
 {
-
+    juce::ValueTree copyState = juce::ValueTree::fromXml(*xmlState.get());
+    apvts.replaceState(copyState);
 }
 
 juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
@@ -558,9 +570,26 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     /*for (int i = 0; i < numParameters; ++i)
         if (juce::RangedAudioParameter* p = getCurrentParameters().getUnchecked(i))
             xmlState.setAttribute(p->paramID, p->getValue());*/
-    xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
+    /*xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
     xmlState.setAttribute("VEL", apvts.getRawParameterValue("VEL")->load());
     xmlState.setAttribute("MASS", apvts.getRawParameterValue("MASS")->load());
+    xmlState.setAttribute("FOR", apvts.getRawParameterValue("FOR")->load());
+    xmlState.setAttribute("FREQ0", apvts.getRawParameterValue("FREQ0")->load());
+    xmlState.setAttribute("FREQ1", apvts.getRawParameterValue("FREQ1")->load());
+    xmlState.setAttribute("FREQ2", apvts.getRawParameterValue("FREQ2")->load());
+    xmlState.setAttribute("DEC0", apvts.getRawParameterValue("DEC0")->load());
+    xmlState.setAttribute("DEC1", apvts.getRawParameterValue("DEC1")->load());
+    xmlState.setAttribute("DEC2", apvts.getRawParameterValue("DEC2")->load());
+    xmlState.setAttribute("GAINPICK10", apvts.getRawParameterValue("GAINPICK10")->load());
+    xmlState.setAttribute("GAINPICK11", apvts.getRawParameterValue("GAINPICK11")->load());
+    xmlState.setAttribute("GAINPICK12", apvts.getRawParameterValue("GAINPICK12")->load());
+    xmlState.setAttribute("STIFF", apvts.getRawParameterValue("STIFF")->load());
+    xmlState.setAttribute("DISS", apvts.getRawParameterValue("DISS")->load());
+    xmlState.setAttribute("SH", apvts.getRawParameterValue("SH")->load());*/
+    for (auto i = 0; i < numParameters - 1; ++i) {
+        juce::RangedAudioParameter* p = getListParameter()[i];
+        xmlState.setAttribute(p->paramID, p->getValue());
+    }
 
     return xmlState;
 }

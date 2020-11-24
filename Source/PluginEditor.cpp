@@ -234,16 +234,30 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
         auto result = m.showAt(presButton.get());
 
         if (result == 1) {
-            juce::String fileSpec = juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory).getFullPathName()
+            /*juce::String fileSpec = juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory).getFullPathName()
                 + ("D:/presets");
             juce::File file(fileSpec);
             auto rr = file.create();
             juce::XmlElement xmlState = audioProcessor.getAndSavePresetStateValueTree();
-            xmlState.writeToFile(file, "");
-        }
-           
+            xmlState.writeToFile(file, "");*/
 
-        /*else if (result == 2)*/
+            juce::FileChooser saveChooser("Select a file to save presets", {}, "*.xml");
+            if (saveChooser.browseForFileToSave(true)) {
+                auto file = saveChooser.getResult();
+                //file.appendText(juce::String("WRITE HERE"));
+                juce::XmlElement xmlState = audioProcessor.getAndSavePresetStateValueTree();
+                xmlState.writeTo(file);
+            }
+        }
+        else if (result == 2) {
+            juce::FileChooser loadChooser("Select the preset to load", {}, "*.xml");
+            if (loadChooser.browseForFileToOpen()) {
+                auto file = loadChooser.getResult();
+                juce::XmlDocument xmlDoc(file);
+                audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
+
+            }
+        }
             
     }
 }

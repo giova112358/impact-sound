@@ -89,6 +89,7 @@ public:
 
     /*juce::AudioProcessorValueTreeState::ParameterLayout createParameters();*/
     juce::OwnedArray<juce::RangedAudioParameter>& getCurrentParameters();
+    std::vector<juce::RangedAudioParameter*> getListParameter();
 
     //==============================================================================
     /** Returns the current list of parameters for writing. */
@@ -96,7 +97,7 @@ public:
 
     /*jdo::StateAB stateAB;*/
     /*jdo::StatePresets statePresets;*/
-    void setPresetStateValueTree();
+    void setPresetStateValueTree(std::unique_ptr<juce::XmlElement> xmlState);
     juce::XmlElement getAndSavePresetStateValueTree();
 
 private:
