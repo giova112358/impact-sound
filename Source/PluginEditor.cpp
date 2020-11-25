@@ -255,7 +255,7 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
             xmlState.writeToFile(file, "");*/
 
             juce::FileChooser saveChooser("Select a file to save presets", {}
-                , "*.xml");
+                , "*.settings");
             if (saveChooser.browseForFileToSave(true)) {
                 auto file = saveChooser.getResult();
                 //file.appendText(juce::String("WRITE HERE"));
@@ -269,11 +269,14 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
             audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
         }*/
         else if (result == 2) {
-            juce::FileChooser loadChooser("Select the preset to load", {}, "*.xml");
+            juce::FileChooser loadChooser("Select the preset to load", {}, "*.settings");
             if (loadChooser.browseForFileToOpen()) {
-                auto file = loadChooser.getResult();
-                juce::XmlDocument xmlDoc(file);
-                audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
+                auto file2 = loadChooser.getResult();
+                juce::XmlDocument xmlDoc(file2);
+                std::unique_ptr<juce::XmlElement> xml = xmlDoc.getDocumentElement();
+                /*audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());*/
+                juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
+                audioProcessor.apvts.replaceState(copyState);
             }
         //    juce::File path("D:/Sound and Audio Engineering/TESI/repo/Source/Resources");
         //    int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.xml");
