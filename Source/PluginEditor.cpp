@@ -155,7 +155,7 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     presButton->addListener(this);
 
 
-    setSize(1000, 600);
+    setSize(1500, 800);
 }
 
 ImpactModelAudioProcessorEditor::~ImpactModelAudioProcessorEditor()
@@ -199,6 +199,11 @@ void ImpactModelAudioProcessorEditor::resized()
     grid.items.add((juce::GridItem(massSlider.get())));
     grid.items.add((juce::GridItem(velocitySlider.get())));
     grid.items.add((juce::GridItem(forceSlider.get())));
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
     grid.items.add((juce::GridItem(freq0Slider.get())));
     grid.items.add((juce::GridItem(freq1Slider.get())));
     grid.items.add((juce::GridItem(freq2Slider.get())));
@@ -211,12 +216,18 @@ void ImpactModelAudioProcessorEditor::resized()
     grid.items.add((juce::GridItem(stiffnessSlider.get())));
     grid.items.add((juce::GridItem(shapeSlider.get())));
     grid.items.add((juce::GridItem(dissipationSlider.get())));
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
+    grid.items.add(juce::GridItem());
     grid.items.add(juce::GridItem(volumeSlider.get()).withSize(300, 20));
     
 
     grid.templateColumns = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), 
-        Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
-    grid.templateRows = { Track(Fr(1)), Track(Fr(1))};
+        Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
+    grid.templateRows = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)) };
     grid.columnGap = juce::Grid::Px(10);
     grid.rowGap = juce::Grid::Px(50);
 
@@ -227,22 +238,22 @@ void ImpactModelAudioProcessorEditor::resized()
 void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
     if (button == presButton.get()) {
-        /*juce::File path("D:/Sound and Audio Engineering/TESI/repo/Source/Resources");
-        int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.xml");
-
-        std::vector<juce::File> files;
+        juce::File path = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory();
+        int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.settings");
+        /*DBG(n);*/
+        std::vector<juce::String> files;
         for (juce::DirectoryEntry entry : juce::RangedDirectoryIterator(path, false))
-            if (entry.getFile().getFileName().contains(".xml"))
-                files.push_back(entry.getFile());*/
+            if (entry.getFile().getFileName().contains(".settings"))
+                files.push_back(entry.getFile().getFileName());
 
         juce::PopupMenu m;
         m.addItem(1, "Save Preset", true, false);
         m.addItem(2, "Load Preset", true, false);
-        //m.addSeparator();
-        ////get number of saved file presets
-        //for (int i = 2; i <= n+1; i++) {
-        //    m.addItem(i, files[i-2].getFileName(), true, false);
-        //}
+        m.addSeparator();
+        //get number of saved file presets
+        for (int i = 0; i < n; i++) {
+            m.addItem(i+3, files[i], true, false);
+        }
 
         auto result = m.showAt(presButton.get());
 
@@ -254,7 +265,8 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
             juce::XmlElement xmlState = audioProcessor.getAndSavePresetStateValueTree();
             xmlState.writeToFile(file, "");*/
 
-            juce::FileChooser saveChooser("Select a file to save presets", {}
+            juce::FileChooser saveChooser("Select a file to save presets", juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile)
+                .getParentDirectory()
                 , "*.settings");
             if (saveChooser.browseForFileToSave(true)) {
                 auto file = saveChooser.getResult();
@@ -263,13 +275,9 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
                 xmlState.writeTo(file);
             }
         }
-        /*else {
-            juce::File file = files[result - 2];
-            juce::XmlDocument xmlDoc(file);
-            audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
-        }*/
         else if (result == 2) {
-            juce::FileChooser loadChooser("Select the preset to load", {}, "*.settings");
+            juce::FileChooser loadChooser("Select the preset to load", juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile)
+                .getParentDirectory(), "*.settings");
             if (loadChooser.browseForFileToOpen()) {
                 auto file2 = loadChooser.getResult();
                 juce::XmlDocument xmlDoc(file2);
@@ -278,6 +286,16 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
                 juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
                 audioProcessor.apvts.replaceState(copyState);
             }
+        }
+        else {
+            juce::File filen = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile)
+                .getParentDirectory().getChildFile(files[result - 3]);/* + "\\"+ files[result - 3]*/;
+            juce::XmlDocument xmlDoc(filen);
+            std::unique_ptr<juce::XmlElement> xml = xmlDoc.getDocumentElement();
+            /*audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());*/
+            juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
+            audioProcessor.apvts.replaceState(copyState);
+        }
         //    juce::File path("D:/Sound and Audio Engineering/TESI/repo/Source/Resources");
         //    int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.xml");
 
@@ -297,7 +315,7 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
         //    auto loadResult = l.show();
         //    juce::XmlDocument xmlDoc(files[loadResult]);
         //    audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
-        }
+        
             
     }
 }
