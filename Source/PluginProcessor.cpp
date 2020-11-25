@@ -204,16 +204,16 @@ juce::AudioProcessorEditor* ImpactModelAudioProcessor::createEditor()
 //==============================================================================
 void ImpactModelAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    juce::ValueTree copyState = apvts.copyState();
+    /*juce::ValueTree copyState = apvts.copyState();
     std::unique_ptr<juce::XmlElement> xml = copyState.createXml();
-    copyXmlToBinary(*xml.get(), destData);
+    copyXmlToBinary(*xml.get(), destData);*/
 }
 
 void ImpactModelAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    std::unique_ptr<juce::XmlElement> xml = getXmlFromBinary(data, sizeInBytes);
+    /*std::unique_ptr<juce::XmlElement> xml = getXmlFromBinary(data, sizeInBytes);
     juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
-    apvts.replaceState(copyState);
+    apvts.replaceState(copyState);*/
 }
 
 //==============================================================================
@@ -560,11 +560,10 @@ void ImpactModelAudioProcessor::setPresetStateValueTree(std::unique_ptr<juce::Xm
 {
     juce::ValueTree copyState = juce::ValueTree::fromXml(*xmlState.get());
     apvts.replaceState(copyState);
-
-    mustUpdateImpactParameters = true;
-    mustUpdateInertialParameters = true;
-    mustUpdateModalParameters = true;
     mustUpdateVolume = true;
+    mustUpdateModalParameters = true;
+    mustUpdateInertialParameters = true;
+    mustUpdateImpactParameters = true;
 }
 
 juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
@@ -573,9 +572,9 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     juce::XmlElement xmlState("MYPLUGINSETTINGS");
 
     // add some attributes to it..
-    /*for (int i = 0; i < numParameters; ++i)
-        if (juce::RangedAudioParameter* p = getCurrentParameters().getUnchecked(i))
-            xmlState.setAttribute(p->paramID, p->getValue());*/
+    //for (int i = 0; i < numParameters; ++i)
+    //    if (juce::RangedAudioParameter* p = getCurrentParameters().getUnchecked(i))
+    //        xmlState.setAttribute(p->paramID, p->getValue());
     xmlState.setAttribute("VOL", apvts.getRawParameterValue("VOL")->load());
     xmlState.setAttribute("VEL", apvts.getRawParameterValue("VEL")->load());
     xmlState.setAttribute("MASS", apvts.getRawParameterValue("MASS")->load());
@@ -599,6 +598,5 @@ juce::XmlElement ImpactModelAudioProcessor::getAndSavePresetStateValueTree()
     }*/
 
     return xmlState;
-
 }
 

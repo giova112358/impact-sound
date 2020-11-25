@@ -154,6 +154,7 @@ ImpactModelAudioProcessorEditor::ImpactModelAudioProcessorEditor (ImpactModelAud
     addAndMakeVisible(presButton.get());
     presButton->addListener(this);
 
+
     setSize(1000, 600);
 }
 
@@ -273,7 +274,6 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
                 auto file = loadChooser.getResult();
                 juce::XmlDocument xmlDoc(file);
                 audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());
-
             }
         //    juce::File path("D:/Sound and Audio Engineering/TESI/repo/Source/Resources");
         //    int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.xml");
