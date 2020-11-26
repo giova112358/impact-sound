@@ -43,7 +43,7 @@ An efficient tool for describing resonating objects is **Modal Synthesis**.
 
 The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers), called resonator is
 
-<img src="Documents/eq15.png" width="70%">
+<img src="Documents/eq15.png" width="55%">
 
 <img src="Documents/eq6.png" width="50%">
 
