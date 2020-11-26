@@ -40,7 +40,7 @@ An efficient tool for describing resonating objects is **Modal Synthesis**.
 
 ### Modal resonators
 
-The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers) is
+The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers), called resonator is
 
 <img src="Documents/eq15.png" width="70%">
 
