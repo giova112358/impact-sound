@@ -31,11 +31,20 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
 ## Impact Model
 #### Description
 The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
+
 An efficient tool for describing resonating objects is **Modal Synthesis**.
-We can model a parallel connection of N oscillating system, made of lumped mechanical elements (such as masses, springs or dampers), by choosing different stiffness 
+
+The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers) is
+
+<img src="Documents/eq6.png" width="20%">
+
+where x is the oscillator displacement while k, m, g are the stiffness mass damping parameters. The pitch and quality factor of the resonator are
+
+<img src="Documents/eq8.png" width="20%">
+
+We can model a parallel connection of N oscillating system, made of lumped mechanical elements, by choosing different stiffness 
 
 <img src="Documents/eq2.png" width="20%">
-
 
 and account for a set of partials of the resonator spectrum (pitches)
 
