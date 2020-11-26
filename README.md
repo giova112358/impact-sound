@@ -13,7 +13,7 @@
     - [Description](#description)
     - [Modal resonators](#modal-resonators)
     - [Discretization](#discretization)
-    - [Contact Force](#contact-force)
+    - [Impact interaction](#impact-interaction)
     - [Synthesis Algorithm](#synthesis-algorithm)
 - [References](#references)
  
@@ -80,7 +80,7 @@ with
 
 <img src="Documents/eq10.png" width="60%">
 
-### Contact Force
+### Impact interaction
 
 The model for the non linear impact force between the two colliding modal resonator is
 
