@@ -42,6 +42,8 @@ An efficient tool for describing resonating objects is **Modal Synthesis**.
 
 The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers) is
 
+<img src="Documents/eq15.png" width="70%">
+
 <img src="Documents/eq6.png" width="50%">
 
 where x is the oscillator displacement while k, m, g are the stiffness mass damping parameters. The pitch and quality factor of the resonator are
