@@ -8,8 +8,8 @@
 <!-- omit in toc -->
 ## Contents
 - [Introduction](#introduction)
-- [Software Architecture](#software architecture)
-- [Impact Model](#impact model)
+- [Software Architecture](#software-architecture)
+- [Impact Model](#impact-model)
     - [Description](#description)
 - [References](#references)
  
@@ -30,8 +30,15 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
  
 ## Impact Model
 #### Description
-The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a common, modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
-An efficient structure for describing resonating objects is **Modal Synthesis**.
+The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
+An efficient tool for describing resonating objects is **Modal Synthesis**.
+We can model a parallel connection of N oscillating system, made of lumped mechanical elements (such as masses, springs or dampers), by choosing different stiffness 
+
+![alt text](Documents/eq1.png "Stiffness" )
+
+and account for a set of partials
+
+![alt text](Documents/eq2.png "Stiffness" )
 
 
 
