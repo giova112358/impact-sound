@@ -112,7 +112,7 @@ The synthesis algorithm is the following
 ## Impact Model Plugin
 The impact model plugin was implemented by taking as a reference the sdt.impact Max/Msp patch from the [Sound Design Toolkit](http://www.soundobject.org/SDT/). 
 
-Resonators expose one or more pickup points, object displacement and velocity can be read at any time from these pickup points. The two resonators implemented in this impact model are:
+In this particular realization of the impact model there are two resonators, they expose one or more pickup points, object displacement and velocity can be read at any time from these pickup points. The two resonators implemented in this impact model are:
 - Inertial mass: Simulates a simple inertial point mass, mostly used as exciter for modal resonators;
 - Modal resonator: Physical model of a set of parallel mass–spring–damper mechanical oscillators, with each oscillator representing a resonant frequency of the object.
 
