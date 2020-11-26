@@ -34,11 +34,11 @@ The impact model is one of the two basics solid interaction models implemented b
 An efficient tool for describing resonating objects is **Modal Synthesis**.
 We can model a parallel connection of N oscillating system, made of lumped mechanical elements (such as masses, springs or dampers), by choosing different stiffness 
 
-![alt text](Documents/eq1.png "Stiffness" )
+![alt text](Documents/eq2.png "Stiffness" )
 
 and account for a set of partials
 
-![alt text](Documents/eq2.png "Stiffness" )
+![alt text](Documents/eq3.png "Stiffness" )
 
 
 
