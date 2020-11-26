@@ -45,6 +45,14 @@ The resulting model equations, in matrix form are the following:
 
 <img src="Documents/equation 1.png" width="70%">
 
+The displacement of the resonator is obtained in this way
+
+<img src="Documents/eq5.png" width="20%">
+
+while the velocity of the resonator is
+
+<img src="Documents/eq4.png" width="20%">
+
 
 
 
