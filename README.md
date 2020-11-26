@@ -1,7 +1,7 @@
 <!-- omit in toc -->
 # Sound Design Toolkit - Impact Model VST3 Plugin
 <!-- omit in toc -->
-### A plugin realization of the impact model from the Sound Design Toolkit created with [JUCE](https://juce.com/)
+### A plugin realization of the impact model from the [Sound Design Toolkit](http://www.soundobject.org/SDT/) created with [JUCE](https://juce.com/)
 
 <img src="Documents/plugin - version 1.png" width="70%">
 
@@ -42,15 +42,15 @@ An efficient tool for describing resonating objects is **Modal Synthesis**.
 
 The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers) is
 
-<img src="Documents/eq6.png" width="70%">
+<img src="Documents/eq6.png" width="50%">
 
 where x is the oscillator displacement while k, m, g are the stiffness mass damping parameters. The pitch and quality factor of the resonator are
 
-<img src="Documents/eq8.png" width="20%">
+<img src="Documents/eq8.png" width="15%">
 
 We can model a parallel connection of N oscillating system, made of lumped mechanical elements, by choosing different stiffness 
 
-<img src="Documents/eq2.png" width="20%">
+<img src="Documents/eq2.png" width="15%">
 
 and account for a set of partials of the resonator spectrum (pitches)
 
@@ -58,15 +58,15 @@ and account for a set of partials of the resonator spectrum (pitches)
 
 The resulting model equations, in matrix form are the following:
 
-<img src="Documents/equation 1.png" width="70%">
+<img src="Documents/equation 1.png" width="65%">
 
 The displacement of the resonator is obtained in this way
 
-<img src="Documents/eq5.png" width="20%">
+<img src="Documents/eq5.png" width="15%">
 
 while the velocity of the resonator is
 
-<img src="Documents/eq4.png" width="20%">
+<img src="Documents/eq4.png" width="15%">
 
 ### Discretization
 
@@ -76,7 +76,7 @@ The systems of equations is discretized using bilinear transform, where Fs is th
 
 with
 
-<img src="Documents/eq10.png" width="70%">
+<img src="Documents/eq10.png" width="60%">
 
 ### Contact Force
 
