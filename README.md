@@ -13,6 +13,8 @@
     - [Description](#description)
     - [Modal resonators](#modal-resonators)
     - [Discretization](#discretization)
+    - [Contact Force](#contact-force)
+    - [Synthesis Algorithm](#synthesis-algorithm)
 - [References](#references)
  
 ## Introduction
@@ -68,13 +70,42 @@ while the velocity of the resonator is
 
 ### Discretization
 
-The systems of equations is discretized using bilinear transform. The resulting numerical system is:
+The systems of equations is discretized using bilinear transform, where Fs is the sampling frequency. The resulting numerical system is:
 
 <img src="Documents/eq9.png" width="70%">
 
 with
 
 <img src="Documents/eq10.png" width="70%">
+
+### Contact Force
+
+The model for the non linear impact force between the two colliding modal resonator is
+
+<img src="Documents/eq11.png" width="70%">
+
+where the parameter 'lambda is the force damping weight.
+
+Marhefka and Orin have studied the collision of a hammer onto a massive surface, which is assumed not to move during collision. When the two objects collide, the hammer initial conditions are given by xh = 0 (hammer position) and x˙ h = vin (hammer velocity).
+
+In the project the impact model by Marhefka and Orin is implemented as a VST3 plugin through the JUCE Framework. The model implemented  describes a collision between two modal objects, As a special case, one object can be a “rigid wall”, i.e. a modal object with an ideally infinite mass. For clarity, the two objects are denoted with the subscripts “h” and “r”, which stand for “hammer” and “resonator”, respectively.
+
+The two objects interact through the impact contact force f(x, x˙). The full system is
+
+<img src="Documents/eq12.png" width="70%">
+
+where xh and xr are the modal displacements of the hammer and the resonator, respectively. The terms fhe, fre represent external forces, while the integers Nh and Nr are the number of modes for the hammer and the resonator, respectively.
+
+The discretized system, using th bilinear transform, is
+
+<img src="Documents/eq13.png" width="70%">
+
+### Synthesis Algorithm
+
+The synthesis algorithm is the following
+
+<img src="Documents/eq14.png" width="70%">
+
 
 
 ## References
