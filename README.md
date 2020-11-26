@@ -11,6 +11,7 @@
 - [Software Architecture](#software-architecture)
 - [Impact Model](#impact-model)
     - [Description](#description)
+    - [Modal resonators](#modal-resonators)
 - [References](#references)
  
 ## Introduction
@@ -29,14 +30,16 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
  - **Plugin Editor** The JUCE Framework class that realizes the GUI and all the parameter listeners used to update the audio processing. 
  
 ## Impact Model
-#### Description
+### Description
 The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
 
 An efficient tool for describing resonating objects is **Modal Synthesis**.
 
+### Modal resonators
+
 The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers) is
 
-<img src="Documents/eq6.png" width="20%">
+<img src="Documents/eq6.png" width="70%">
 
 where x is the oscillator displacement while k, m, g are the stiffness mass damping parameters. The pitch and quality factor of the resonator are
 
