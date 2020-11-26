@@ -12,6 +12,7 @@
 - [Impact Model](#impact-model)
     - [Description](#description)
     - [Modal resonators](#modal-resonators)
+    - [Discretization](#discretization)
 - [References](#references)
  
 ## Introduction
@@ -65,7 +66,15 @@ while the velocity of the resonator is
 
 <img src="Documents/eq4.png" width="20%">
 
+### Discretization
 
+The systems of equations is discretized using bilinear transform. The resulting numerical system is:
+
+<img src="Documents/eq9.png" width="70%">
+
+with
+
+<img src="Documents/eq10.png" width="70%">
 
 
 ## References
