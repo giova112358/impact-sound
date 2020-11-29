@@ -19,18 +19,13 @@
 - [References](#references)
  
 ## Introduction
-The Sound Design Toolkit consists in a library of ecologically founded (e.g physics based) sound synthesis algorithms. These algorithms have been implemented according to three main points:
-- auditory perceptual relevance;
-- cartoonification;
-- parametric temporal control;
+The Sound Design Toolkit consists in a library of ecologically founded (e.g physics based) sound synthesis algorithms. 
 
 In this project the entire SDT library is ported in C++ and integrated in the JUCE framework for the realization of a VST3 plugin version of the impact model.
  
 ## Impact Model
 ### Description
 The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
-
-An efficient tool for describing resonating objects is **Modal Synthesis**.
 
 ### Modal resonators
 
@@ -113,7 +108,13 @@ Interactor algorithms read the state of exactly two pickup points, one for each 
 
 ## Software Architecture
 
-<img src="Documents/uml.png" width="70%">
+The C++ wrappers have the following software architecture
+
+<img src="Documents/uml.png" width="60%">
+
+The real time audio processing logic implemented in the plugin, is described in the following flow chart diagram
+
+<img src="Documents/pluginProcessor_flowchart.png" width="50%">
 
 ## References
 
