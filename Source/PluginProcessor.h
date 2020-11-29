@@ -9,12 +9,10 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "ImpactModel.h"
-#include "State.h"
+//#include "ImpactModel.h"
+#include "DspProcessor.h"
 
 //==============================================================================
-/**
-*/
 class ImpactModelAudioProcessor  : public juce::AudioProcessor,
      juce::AudioProcessorValueTreeState::Listener
 {
@@ -117,7 +115,8 @@ private:
 
     juce::LinearSmoothedValue<float> mVolume[2]{ 0.0 };
 
-    std::unique_ptr<ImpactModel> model[numChannels];
+    /*std::unique_ptr<ImpactModel> model[numChannels];*/
+    std::unique_ptr<DspProcessor> model[numChannels];
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ImpactModelAudioProcessor)
 };

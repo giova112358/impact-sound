@@ -226,13 +226,13 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 //===============================================================================
 void ImpactModelAudioProcessor::init()
 {
-    model[0] = std::make_unique<ImpactModel>();
-    model[0]->setResonatorsID("hammeri1", "objecti1");
-    model[0]->registerInteraction("hammeri1", "objecti1");
+    char ine1[9] = { "hammeri0" };
+    char mod1[9] = { "objecti0" };
+    char ine2[9] = { "hammeri1" };
+    char mod2[9] = { "objecti1" };
 
-    model[1] = std::make_unique<ImpactModel>();
-    model[1]->setResonatorsID("hammeri2", "objecti2");
-    model[1]->registerInteraction("hammeri2", "objecti2");
+    model[0] = std::make_unique<DspProcessor>(ine1, mod1);
+    model[1] = std::make_unique<DspProcessor>(ine2, mod2);
 }
 
 //===============================================================================
@@ -267,8 +267,8 @@ void ImpactModelAudioProcessor::updateInertialParameters()
     double force = f->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setInertialParameters(mass, 1.0);
-        model[channel]->setExtenalForce(-1*force);
+        model[channel]->inertialResonator->setInertialParameters(mass, 1.0);
+        model[channel]->setExternalForce(-1*force);
         /*model[channel]->setStrike(0.0, -1 * velocity);*/
     }
     //strike();
@@ -292,7 +292,7 @@ void ImpactModelAudioProcessor::updateModalParameters()
     double gains[SDT_MAX_PICKUPS][SDT_MAX_MODES]{ {gain10->load(), gain11->load(), gain12->load()}, {0.0, 0.0, 0.0} };
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setModalParameters(freqs, decays, gains, 1.0, 3);
+        model[channel]->modalResonator->setModalParameters(freqs, decays, gains, 1.0, 3);
     }
     //strike();
 }
@@ -309,7 +309,7 @@ void ImpactModelAudioProcessor::updateImpactParameters()
     double dissipation = diss->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setImpactParameters(stiffness, shape, dissipation, 0, 0);
+        model[channel]->impactModel->setImpactParameters(stiffness, shape, dissipation, 0, 0);
     }
     //strike();
 }
@@ -322,7 +322,7 @@ void ImpactModelAudioProcessor::strike()
     double velocity = vel->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->setStrike(0.0, -9.741634);
+        model[channel]->inertialResonator->setStrike(0.0, -9.741634);
     }
 
 }
