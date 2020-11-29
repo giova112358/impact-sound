@@ -309,7 +309,7 @@ void ImpactModelAudioProcessor::updateImpactParameters()
     double dissipation = diss->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->impactModel->setImpactParameters(stiffness, shape, dissipation, 0, 0);
+        model[channel]->impactInteractor->setImpactParameters(stiffness, shape, dissipation, 0, 0);
     }
     //strike();
 }

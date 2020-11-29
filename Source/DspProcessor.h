@@ -34,7 +34,7 @@ public:
 
     std::unique_ptr<Inertial> inertialResonator;
     std::unique_ptr<Modal> modalResonator;
-    std::unique_ptr<Impact> impactModel;
+    std::unique_ptr<Impact> impactInteractor;
    
 private:
     int nModes{ 3 };
