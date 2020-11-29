@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Parameters>
+  <PARAM id="BANG" value="1.0"/>
+  <PARAM id="DEC0" value="0.01600000075995922"/>
+  <PARAM id="DEC1" value="0.01200000010430813"/>
+  <PARAM id="DEC2" value="0.01999999955296516"/>
+  <PARAM id="DISS" value="0.1944530010223389"/>
+  <PARAM id="FOR" value="0.0"/>
+  <PARAM id="FREQ0" value="1350.0"/>
+  <PARAM id="FREQ1" value="1374.300048828125"/>
+  <PARAM id="FREQ2" value="2146.5"/>
+  <PARAM id="GAINPICK10" value="60.00000381469727"/>
+  <PARAM id="GAINPICK11" value="30.0"/>
+  <PARAM id="GAINPICK12" value="40.0"/>
+  <PARAM id="MASS" value="0.001037999987602234"/>
+  <PARAM id="SH" value="1.111111044883728"/>
+  <PARAM id="STIFF" value="8.34207744e8"/>
+  <PARAM id="VEL" value="0.5865430235862732"/>
+  <PARAM id="VOL" value="0.0"/>
+</Parameters>
