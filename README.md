@@ -8,7 +8,6 @@
 <!-- omit in toc -->
 ## Contents
 - [Introduction](#introduction)
-- [Software Architecture](#software-architecture)
 - [Impact Model](#impact-model)
     - [Description](#description)
     - [Modal resonators](#modal-resonators)
@@ -16,6 +15,7 @@
     - [Impact interaction](#impact-interaction)
     - [Synthesis Algorithm](#synthesis-algorithm)
 - [Impact Model Plugin](#impact-model-plugin)
+- [Software Architecture](#software-architecture)
 - [References](#references)
  
 ## Introduction
@@ -25,13 +25,6 @@ The Sound Design Toolkit consists in a library of ecologically founded (e.g phys
 - parametric temporal control;
 
 In this project the entire SDT library is ported in C++ and integrated in the JUCE framework for the realization of a VST3 plugin version of the impact model.
-
-## Software Architecture
- The software architecture consists of :
- - **SDT Library** A core library coded in ANSI C, with few and widely supported dependencies, exposing a clean and streamlined API to all the implemented sound models, sound processors and audio feature extractors.
- - **Wrapper class** A class that realizes the porting of the desired SDT objects  to use them in the JUCE framework.
- - **Plugin Processor** The JUCE Framework class that realizes the audio processing for a Plugin.
- - **Plugin Editor** The JUCE Framework class that realizes the GUI and all the parameter listeners used to update the audio processing. 
  
 ## Impact Model
 ### Description
@@ -118,6 +111,9 @@ In this particular realization of the impact model there are two resonators, the
 
 Interactor algorithms read the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
 
+## Software Architecture
+
+<img src="Documents/uml.png" width="70%">
 
 ## References
 - (1) https://www.eecs.qmul.ac.uk/~josh/documents/2012/GiannoulisMassbergReiss-dynamicrangecompression-JAES2012.pdf
