@@ -53,9 +53,7 @@
         <FILE id="yepSfX" name="SDTStructs.c" compile="1" resource="0" file="Source/SDT/SDTStructs.c"/>
         <FILE id="wbdMuR" name="SDTStructs.h" compile="0" resource="0" file="Source/SDT/SDTStructs.h"/>
       </GROUP>
-      <FILE id="RUdWqA" name="ImpactModel.cpp" compile="1" resource="0" file="Source/ImpactModel.cpp"/>
       <FILE id="K1G40S" name="DspProcessor.h" compile="0" resource="0" file="Source/DspProcessor.h"/>
-      <FILE id="ipvmpB" name="Impact.cpp" compile="1" resource="0" file="Source/Impact.cpp"/>
       <FILE id="QnVlTv" name="Impact.h" compile="0" resource="0" file="Source/Impact.h"/>
       <FILE id="nn0OcE" name="Inertial.cpp" compile="1" resource="0" file="Source/Inertial.cpp"/>
       <FILE id="gRnB8X" name="Inertial.h" compile="0" resource="0" file="Source/Inertial.h"/>
@@ -63,7 +61,7 @@
       <FILE id="cJsAk5" name="Modal.h" compile="0" resource="0" file="Source/Modal.h"/>
       <FILE id="bkxnQ0" name="DspProcessor.cpp" compile="1" resource="0"
             file="Source/DspProcessor.cpp"/>
-      <FILE id="l784ay" name="ImpactModel.h" compile="0" resource="0" file="Source/ImpactModel.h"/>
+      <FILE id="bYZha5" name="Impact.cpp" compile="1" resource="0" file="Source/Impact.cpp"/>
       <FILE id="BaVuew" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="Xj6TAf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>

@@ -9,7 +9,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-//#include "ImpactModel.h"
 #include "DspProcessor.h"
 
 //==============================================================================
@@ -85,16 +84,7 @@ public:
     void addGainParameters(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 
-    /*juce::AudioProcessorValueTreeState::ParameterLayout createParameters();*/
-    juce::OwnedArray<juce::RangedAudioParameter>& getCurrentParameters();
-    std::vector<juce::RangedAudioParameter*> getListParameter();
-
     //==============================================================================
-    /** Returns the current list of parameters for writing. */
-    /*juce::OwnedArray<juce::AudioProcessorParameter>& getParametersForWriting() noexcept;*/
-
-    /*jdo::StateAB stateAB;*/
-    /*jdo::StatePresets statePresets;*/
     void setPresetStateValueTree(std::unique_ptr<juce::XmlElement> xmlState);
     juce::XmlElement getAndSavePresetStateValueTree();
 
@@ -115,7 +105,6 @@ private:
 
     juce::LinearSmoothedValue<float> mVolume[2]{ 0.0 };
 
-    /*std::unique_ptr<ImpactModel> model[numChannels];*/
     std::unique_ptr<DspProcessor> model[numChannels];
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ImpactModelAudioProcessor)
