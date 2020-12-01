@@ -34,13 +34,13 @@ private:
     {
         RightSidePanel(ImpactModelAudioProcessor& p) : audioProcessor(p)
         {
-            volumeSlider = std::make_unique<juce::Slider >(juce::Slider::SliderStyle::LinearBar, juce::Slider::TextBoxRight);
+            volumeSlider = std::make_unique<juce::Slider >(juce::Slider::SliderStyle::LinearBarVertical, juce::Slider::NoTextBox);
             addAndMakeVisible(volumeSlider.get());
             volAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "VOL", *volumeSlider);
-            volumeLabel = std::make_unique<juce::Label>("", "Volume");
+            volumeLabel = std::make_unique<juce::Label>("", "Gain");
             addAndMakeVisible(volumeLabel.get());
             volumeLabel->attachToComponent(volumeSlider.get(), false);
-            volumeLabel->setJustificationType(juce::Justification::centredBottom);
+            volumeLabel->setJustificationType(juce::Justification::centredTop);
 
             stiffnessSlider = std::make_unique<juce::Slider>(juce::Slider::SliderStyle::Rotary, juce::Slider::TextBoxBelow);
             addAndMakeVisible(stiffnessSlider.get());
@@ -65,6 +65,10 @@ private:
             addAndMakeVisible(dissipationLabel.get());
             dissipationLabel->attachToComponent(dissipationSlider.get(), false);
             dissipationLabel->setJustificationType(juce::Justification::centredBottom);
+
+            theLFLight.setColourScheme(juce::LookAndFeel_V4::getGreyColourScheme());
+
+            juce::LookAndFeel::setDefaultLookAndFeel(&theLFLight);
         }
 
         void paint(juce::Graphics& g) override
@@ -75,15 +79,15 @@ private:
         void resized() override
         {
             auto bounds = getLocalBounds();
-            bounds.removeFromTop(15);
+            bounds.removeFromTop(20);
             juce::Grid grid;
             using Track = juce::Grid::TrackInfo;
             using Fr = juce::Grid::Fr;
 
-            grid.items.add((juce::GridItem(volumeSlider.get())).withSize(180, 40).withJustifySelf(juce::GridItem::JustifySelf::center));
             grid.items.add((juce::GridItem(stiffnessSlider.get())));
             grid.items.add((juce::GridItem(shapeSlider.get())));
             grid.items.add((juce::GridItem(dissipationSlider.get())));
+            grid.items.add((juce::GridItem(volumeSlider.get())).withSize(30, 120).withJustifySelf(juce::GridItem::JustifySelf::center));
 
             grid.templateRows = { Track(Fr(1)), Track(Fr(1)), Track(Fr(1)),
             Track(Fr(1)) };
@@ -100,6 +104,8 @@ private:
 
         std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volAttachment, stiffAttachment,
             shapeAttachment, dissAttachment;
+
+        juce::LookAndFeel_V4 theLFLight;
 
         ImpactModelAudioProcessor& audioProcessor;
     };
@@ -335,3 +341,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ImpactModelAudioProcessorEditor)
 };
+
