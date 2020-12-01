@@ -263,22 +263,25 @@ void ImpactModelAudioProcessorEditor::resized()
 //================================================================================
 void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
+    juce::PopupMenu m;
+    m.addItem(1, "Save Preset", true, false);
+    m.addItem(2, "Load Preset", true, false);
+    m.addSeparator();
     if (button == presButton.get()) {
         juce::File path = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory();
         int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.settings");
         /*DBG(n);*/
         std::vector<juce::String> files;
-        for (juce::DirectoryEntry entry : juce::RangedDirectoryIterator(path, false))
-            if (entry.getFile().getFileName().contains(".settings"))
-                files.push_back(entry.getFile().getFileName());
+        if (n > 0) {
+            for (juce::DirectoryEntry entry : juce::RangedDirectoryIterator(path, false))
+                if (entry.getFile().getFileName().contains(".settings"))
+                    files.push_back(entry.getFile().getFileName());
 
-        juce::PopupMenu m;
-        m.addItem(1, "Save Preset", true, false);
-        m.addItem(2, "Load Preset", true, false);
-        m.addSeparator();
-        //get number of saved file presets
-        for (int i = 0; i < n; i++) {
-            m.addItem(i+3, files[i], true, false);
+
+            //get number of saved file presets
+            for (int i = 0; i < n; i++) {
+                m.addItem(i + 3, files[i], true, false);
+            }
         }
 
         auto result = m.showAt(presButton.get());
@@ -314,13 +317,17 @@ void ImpactModelAudioProcessorEditor::buttonClicked(juce::Button* button)
             }
         }
         else {
-            juce::File filen = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile)
-                .getParentDirectory().getChildFile(files[result - 3]);/* + "\\"+ files[result - 3]*/;
-            juce::XmlDocument xmlDoc(filen);
-            std::unique_ptr<juce::XmlElement> xml = xmlDoc.getDocumentElement();
-            /*audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());*/
-            juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
-            audioProcessor.apvts.replaceState(copyState);
+            if (n > 0) {
+                if (result >= 3 && result < 3 + n) {
+                    juce::File filen = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile)
+                        .getParentDirectory().getChildFile(files[result - 3]);/* + "\\"+ files[result - 3]*/;
+                    juce::XmlDocument xmlDoc(filen);
+                    std::unique_ptr<juce::XmlElement> xml = xmlDoc.getDocumentElement();
+                    /*audioProcessor.setPresetStateValueTree(xmlDoc.getDocumentElement());*/
+                    juce::ValueTree copyState = juce::ValueTree::fromXml(*xml.get());
+                    audioProcessor.apvts.replaceState(copyState);
+                }
+            }
         }
         //    juce::File path("D:/Sound and Audio Engineering/TESI/repo/Source/Resources");
         //    int n = path.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.xml");
