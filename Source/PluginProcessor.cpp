@@ -307,7 +307,7 @@ void ImpactModelAudioProcessor::strike()
     double velocity = vel->load();
 
     for (int channel = 0; channel < numChannels; ++channel) {
-        model[channel]->inertialResonator->setStrike(0.0, -9.741634);
+        model[channel]->inertialResonator->setStrike(0.0, -1*velocity);
     }
 
 }

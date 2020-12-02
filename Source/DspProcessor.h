@@ -43,7 +43,8 @@ private:
     double tmpOuts[2 * SDT_MAX_PICKUPS]; /*array where the velocity and displacent information
                                          of the modal resonator in the two pickup points are
                                          stored*/
-    double f{ 0.0 };
+    /*double f{ 0.0 };*/
+    std::atomic<double> force;
     
 
 };

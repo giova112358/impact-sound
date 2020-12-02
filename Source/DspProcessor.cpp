@@ -23,7 +23,8 @@ DspProcessor::~DspProcessor()
 
 void DspProcessor::setExternalForce(double f)
 {
-    this->f = f;
+    /*this->f = f;*/
+    force.store(f);
 }
 
 void DspProcessor::setSampleRate(double sampleRate)
@@ -34,7 +35,7 @@ void DspProcessor::setSampleRate(double sampleRate)
 double DspProcessor::process()
 {
     //DBG(ctmpOuts[1]);
-    SDTInteractor_dsp(impactInteractor.get()->getSDTObj(), f, 0, 0, 0, 0, 0, tmpOuts);
+    SDTInteractor_dsp(impactInteractor.get()->getSDTObj(), force.load(), 0, 0, 0, 0, 0, tmpOuts);
     return tmpOuts[1];
 }
 

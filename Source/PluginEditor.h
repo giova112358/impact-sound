@@ -73,12 +73,21 @@ private:
 
         void paint(juce::Graphics& g) override
         {
-            /*g.fillAll(juce::Colours::grey);*/
+            /*juce::Rectangle<int> titleArea(0, 10, getWidth(), 10);
+
+            g.setColour(juce::Colours::white);
+            g.drawText("IMPACT CONTROLS ", titleArea, juce::Justification::centredTop);*/
+
+            /*juce::Rectangle <float> area(getWidth()-5, getHeight()+10);
+
+            g.setColour(juce::Colours::yellow);
+            g.drawRoundedRectangle(area, 20.0f, 2.0f);*/
         }
 
         void resized() override
         {
             auto bounds = getLocalBounds();
+            /*bounds.removeFromTop(20);*/
             bounds.removeFromTop(20);
             juce::Grid grid;
             using Track = juce::Grid::TrackInfo;
@@ -147,7 +156,15 @@ private:
 
         void paint(juce::Graphics& g) override
         {
-            /*g.fillAll(juce::Colours::grey);*/
+            /*juce::Rectangle<int> titleArea(0, 10, getWidth(), 10);
+
+            g.setColour(juce::Colours::white);
+            g.drawText("RESONATOR CONTROLS ", titleArea, juce::Justification::centredTop);*/
+
+            /*juce::Rectangle <float> area(getWidth()-5, getHeight()+10);
+
+            g.setColour(juce::Colours::yellow);
+            g.drawRoundedRectangle(area, 20.0f, 2.0f);*/
         }
 
         void resized() override
@@ -264,13 +281,28 @@ private:
 
         void paint(juce::Graphics& g) override
         {
-            /*g.fillAll(juce::Colours::grey);*/
+            /*auto bounds = getLocalBounds();
+            auto textBounds = bounds.removeFromTop(5);
+            g.setColour(juce::Colours::white);
+            g.setFont(juce::Font(12.0f).italicised().withExtraKerningFactor(0.1f));
+            g.drawFittedText("RESONATOR CONTROLS", textBounds, juce::Justification::centred, 1);*/
+            /*juce::Rectangle<int> titleArea(-10, -10, getWidth(), 10);
+
+            g.setColour(juce::Colours::white);
+            g.drawText("INERTIAL CONTROLS ", titleArea, juce::Justification::centredTop);*/
+
+            /*juce::Rectangle <float> area(getWidth()-5, getHeight()+10);
+
+            g.setColour(juce::Colours::yellow);
+            g.drawRoundedRectangle(area, 20.0f, 2.0f);*/
+
         }
 
         void resized() override
         {
             auto bounds = getLocalBounds();
-            bounds.removeFromTop(15);
+            /*bounds.removeFromTop(15);*/
+            bounds.removeFromTop(20);
             juce::Grid grid;
             using Track = juce::Grid::TrackInfo;
             using Fr = juce::Grid::Fr;
