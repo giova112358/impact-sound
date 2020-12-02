@@ -95,7 +95,7 @@ The discretized system, using th bilinear transform, is
 
 The synthesis algorithm is the following
 
-<img src="Documents/eq14.png" width="70%">
+<img src="Documents/eq14.png" width="90%">
 
 ## Impact Model Plugin
 The impact model plugin was implemented by taking as a reference the sdt.impact Max/Msp patch from the [Sound Design Toolkit](http://www.soundobject.org/SDT/). 
