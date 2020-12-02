@@ -15,7 +15,7 @@
     - [Impact interaction](#impact-interaction)
     - [Synthesis Algorithm](#synthesis-algorithm)
 - [Impact Model Plugin](#impact-model-plugin)
-- [Software Architecture](#software-architecture)
+    - [Software Architecture](#software-architecture)
 - [References](#references)
  
 ## Introduction
@@ -25,7 +25,9 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
  
 ## Impact Model
 ### Description
-The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects.
+The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The sound synthesis method implemented in the impact model is the modal synthesis, where the sound of an object is represented as a linear combination of modes, i. e. the solutions to N second order damped harmonical oscillators.
+The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects, which are described through 
+modal synthesis.
 
 ### Modal resonators
 
@@ -95,7 +97,7 @@ The discretized system, using th bilinear transform, is
 
 The synthesis algorithm is the following
 
-<img src="Documents/eq14.png" width="70%">
+<img src="Documents/eq14.png" width="90%">
 
 ## Impact Model Plugin
 The impact model plugin was implemented by taking as a reference the sdt.impact Max/Msp patch from the [Sound Design Toolkit](http://www.soundobject.org/SDT/). 
@@ -106,15 +108,18 @@ In this particular realization of the impact model there are two resonators, the
 
 Interactor algorithms read the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
 
-## Software Architecture
+### Software Architecture
 
-The C++ wrappers have the following software architecture
+The SDT library is ported in C++ through the creation of a series of class wrappers, this to preserve modularity. The DSP audio processing has been separated from the resonators
+and interactors methods, in this way we have a template to use for all the SDT class wrappers. The audio processing in the DspProcess class is a sample-by-sample processing,
+the creation of the buffer is delegated to the processBlock method of the PluginProcessor class. The software architecture is the following:
 
-<img src="Documents/uml.png" width="60%">
+<img src="Documents/uml.png" width="70%">
 
-The real time audio processing logic implemented in the plugin, is described in the following flow chart diagram
 
-<img src="Documents/pluginProcessor_flowchart.png" width="50%">
+The final audio processing is realized by the processBlock method of the Pluginprocessor class, this method is called in the main audio thread of the plugin. To connect the user parameters, that can be changed in the GUI, in a safe way a real time audio processing logic is implemented in the plugin :
+
+<img src="Documents/pluginProcessor_flowchart.png" width="60%">
 
 ## References
 
