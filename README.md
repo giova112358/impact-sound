@@ -3,7 +3,7 @@
 <!-- omit in toc -->
 ### A plugin realization of the impact model from the [Sound Design Toolkit](http://www.soundobject.org/SDT/) created with [JUCE](https://juce.com/)
 
-<img src="Documents/plugin - version 1.png" width="70%">
+<img src="Documents/plugin-version2.png" width="50%">
 
 <!-- omit in toc -->
 ## Contents
@@ -16,7 +16,6 @@
     - [Synthesis Algorithm](#synthesis-algorithm)
 - [Impact Model Plugin](#impact-model-plugin)
     - [Software Architecture](#software-architecture)
-- [References](#references)
  
 ## Introduction
 The Sound Design Toolkit consists in a library of ecologically founded (e.g physics based) sound synthesis algorithms. 
@@ -25,9 +24,7 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
  
 ## Impact Model
 ### Description
-The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The sound synthesis method implemented in the impact model is the modal synthesis, where the sound of an object is represented as a linear combination of modes, i. e. the solutions to N second order damped harmonical oscillators.
-The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects, which are described through 
-modal synthesis.
+The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The sound synthesis method implemented in the impact model is the modal synthesis, where the sound of an object is represented as a linear combination of modes, i. e. the solutions to N second order damped harmonical oscillators. The modal synthesis can be regarded as a lumped physical modelling approach.
 
 ### Modal resonators
 
@@ -73,13 +70,16 @@ with
 
 ### Impact interaction
 
+The contact force is a function of the relative compression x(t) between the twocontacting objects (which may be thought as the difference between the displacements of the two
+objects during the contact), and also of the compression velocity v(t) = dx(t)/dt.
+
 The model for the non linear impact force between the two colliding modal resonator is
 
 <img src="Documents/eq11.png" width="70%">
 
-where the parameter 'lambda is the force damping weight.
+where the parameter 'lambda is the force damping weight, k is the stiffness parameter and the exponent alpha depends on the local geometry around the contact area
 
-Marhefka and Orin have studied the collision of a hammer onto a massive surface, which is assumed not to move during collision. When the two objects collide, the hammer initial conditions are given by xh = 0 (hammer position) and x˙ h = vin (hammer velocity).
+Marhefka and Orin have studied the collision of a hammer onto a massive surface, which is assumed not to move during collision. When the two objects collide, the hammer initial conditions are given by xh = 0 (hammer position) and x˙ h = vin (hammer velocity). This is an example of impact interaction between two resonating objects.
 
 In the project the impact model by Marhefka and Orin is implemented as a VST3 plugin through the JUCE Framework. The model implemented  describes a collision between two modal objects, As a special case, one object can be a “rigid wall”, i.e. a modal object with an ideally infinite mass. For clarity, the two objects are denoted with the subscripts “h” and “r”, which stand for “hammer” and “resonator”, respectively.
 
@@ -95,7 +95,7 @@ The discretized system, using th bilinear transform, is
 
 ### Synthesis Algorithm
 
-The synthesis algorithm is the following
+The final sound is the total displacement of the system. The synthesis algorithm is the following
 
 <img src="Documents/eq14.png" width="90%">
 
@@ -103,10 +103,10 @@ The synthesis algorithm is the following
 The impact model plugin was implemented by taking as a reference the sdt.impact Max/Msp patch from the [Sound Design Toolkit](http://www.soundobject.org/SDT/). 
 
 In this particular realization of the impact model there are two resonators, they expose one or more pickup points, object displacement and velocity can be read at any time from these pickup points. The two resonators implemented in this impact model are:
-- Inertial mass: Simulates a simple inertial point mass, mostly used as exciter for modal resonators;
+- Inertial mass: Simulates a simple inertial point mass, i. e. the hammer resonator mostly used as exciter for modal resonators;
 - Modal resonator: Physical model of a set of parallel mass–spring–damper mechanical oscillators, with each oscillator representing a resonant frequency of the object.
 
-Interactor algorithms read the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
+The interaction algorithm has a modular structure "resonator-interactor–resonator", it reads the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
 
 ### Software Architecture
 
@@ -121,7 +121,8 @@ The final audio processing is realized by the processBlock method of the Pluginp
 
 <img src="Documents/pluginProcessor_flowchart.png" width="60%">
 
-## References
+The parameters are stored in atomic lock-free variables so to prevent the use of mutex or other techniques that could block the main thread.
+
 
 
 
