@@ -3,7 +3,7 @@
 <!-- omit in toc -->
 ### A plugin realization of the impact model from the [Sound Design Toolkit](http://www.soundobject.org/SDT/) created with [JUCE](https://juce.com/)
 
-<img src="Documents/plugin-version2.png" width="70%">
+<img src="Documents/plugin-version2.png" width="50%">
 
 <!-- omit in toc -->
 ## Contents
