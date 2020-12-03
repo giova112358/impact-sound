@@ -26,9 +26,6 @@ In this project the entire SDT library is ported in C++ and integrated in the JU
 ### Description
 The impact model is one of the two basics solid interaction models implemented by the Sound Design Toolkit. The sound synthesis method implemented in the impact model is the modal synthesis, where the sound of an object is represented as a linear combination of modes, i. e. the solutions to N second order damped harmonical oscillators. The modal synthesis can be regarded as a lumped physical modelling approach.
 
-The interaction algorithm has a modular structure "resonator–"interactor–resonator", representing the interaction between two resonating objects, which are described through 
-modal synthesis.
-
 ### Modal resonators
 
 The simplest mechanical oscillating system made of lumped elements (such as masses, springs or dampers), called resonator is
@@ -109,7 +106,7 @@ In this particular realization of the impact model there are two resonators, the
 - Inertial mass: Simulates a simple inertial point mass, i. e. the hammer resonator mostly used as exciter for modal resonators;
 - Modal resonator: Physical model of a set of parallel mass–spring–damper mechanical oscillators, with each oscillator representing a resonant frequency of the object.
 
-Interactor algorithms read the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
+The interaction algorithm has a modular structure "resonator-interactor–resonator", it reads the state of exactly two pickup points, one for each interacting resonator, and apply a force accordingly.
 
 ### Software Architecture
 
