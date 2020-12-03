@@ -120,7 +120,7 @@ The final audio processing is realized by the processBlock method of the Pluginp
 
 <img src="Documents/pluginProcessor_flowchart.png" width="60%">
 
-## References
+
 
 
 
